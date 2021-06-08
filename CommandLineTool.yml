@@ -10,10 +10,10 @@ $graph:
   type: documentation
   doc:
     - |
-      # Common Workflow Language (CWL) Command Line Tool Description, v1.2
+      # Common Workflow Language (CWL) Command Line Tool Description, v1.3.0-dev1
 
       This version:
-        * https://w3id.org/cwl/v1.2/
+        * https://w3id.org/cwl/v1.3.0-dev1
 
       Latest stable version:
         * https://w3id.org/cwl/
@@ -37,53 +37,19 @@ $graph:
     - {$include: intro.md}
 
     - |
-      ## Introduction to the CWL Command Line Tool standard v1.2
+      ## Introduction to the CWL Command Line Tool standard v1.3.0-dev1
 
-      This specification represents the latest development release from the
-      CWL group.  Since the v1.1 release, v1.2 introduces the
-      following updates to the CWL Command Line Tool standard.
-      Documents should use `cwlVersion: v1.2` to make use of new
-      syntax and features introduced in v1.2.  Existing v1.1 documents
-      should be trivially updatable by changing `cwlVersion`, however
-      CWL documents that relied on previously undefined or
-      underspecified behavior may have slightly different behavior in
-      v1.2.
+      This specification represents the latest development version from the
+      CWL group.
 
       ## Changelog
 
-      * `coresMin` and `coresMax` of
-          [ResourceRequirement](#ResourceRequirement) may now request fractional CPUs.
-      * `ramMin`, `ramMax`, `tmpdirMin`, `tmpdirMax`, `outdirMin`, and `outdirMax` of
-          [ResourceRequirement](#ResourceRequirement) now accept floating point values.
-      * [CommandLineTool](#CommandLineTool) can now express `intent`
-        with an identifier for the type of computational operation.
-      * Added conformance tests for order of operations evaluating `secondaryFiles` on input
-        and ensure that input and output secondaryFiles expressions can return a File object.
-      * Clarify there are no limits on the size of file literal `contents`.
-      * When using `loadContents` it now must fail when attempting to
-        load a file greater than 64 KiB instead of silently truncating
-        the data.
-      * Objects, arrays and numbers returned by parameter references
-        or expressions in `Dirent.entry` that are not a `File` or
-        `Directory` object (or array of such) are now specified to be
-        JSON serialized to produce file contents.
-      * Note that only enum and record types can be typedef-ed
-      * Added conformance tests for order of operations evaluating `secondaryFiles` on input
-        and ensure that input and output secondaryFiles expressions can return a File object.
-      * Escaping in [string interpolation](#String_Interpolation) has
-        been added to the specification along with conformance tests.
-      * It is now possible to have an absolute path in the `entryname`
-        field in
-        [InitialWorkDirRequirement](#InitialWorkDirRequirement) when
-        running in a mandatory container.  Together with
-        `DockerRequirement.dockerOutputDirectory` this it possible to
-        control the locations of both input and output files when
-        running in containers.
-      * Specify default success/fail interpretation of exit codes when not given.
 
-      See also the [CWL Workflow Description, v1.2 changelog](Workflow.html#Changelog).
+      See also the [CWL Workflow Description, v1.3.0-dev1 changelog](Workflow.html#Changelog).
       For other changes since CWL v1.0, see the
       [CWL Command Line Tool Description, v1.1 changelog](https://www.commonwl.org/v1.1/CommandLineTool.html#Changelog)
+      and
+      [CWL Command Line Tool Description, v1.2 changelog](https://www.commonwl.org/v1.2/CommandLineTool.html#Changelog).
 
       ## Purpose
 

@@ -11,10 +11,10 @@ $graph:
   type: documentation
   doc:
     - |
-      # Common Workflow Language (CWL) Workflow Description, v1.2
+      # Common Workflow Language (CWL) Workflow Description, v1.3.0-dev1
 
       This version:
-        * https://w3id.org/cwl/v1.2/
+        * https://w3id.org/cwl/v1.3.0-dev1
 
       Latest stable version:
         * https://w3id.org/cwl/
@@ -35,49 +35,21 @@ $graph:
 
     - |
 
-      ## Introduction to CWL Workflow standard v1.2
+      ## Introduction to CWL Workflow standard v1.3.0-dev1
 
-      This specification represents the latest stable release from the
-      CWL group.  Since the v1.1 release, v1.2 introduces the
-      following updates to the CWL Workflow standard.
-      Documents should to use `cwlVersion: v1.2` to make use of new
-      syntax and features introduced in v1.2.  Existing v1.1 documents
-      should be trivially updatable by changing `cwlVersion`, however
-      CWL documents that relied on previously undefined or
-      underspecified behavior may have slightly different behavior in
-      v1.2.  See note about `cwl-upgrader` in the changelog.
+      This specification represents the latest development version from the
+      CWL group.
+
+      
 
       ## Changelog
 
-        * Adds `when` field to [WorkflowStep](#WorkflowStep) for conditional
-          execution
-        * Adds `pickValue` field to [WorkflowStepInput](#WorkflowStepInput) and
-          [WorkflowOutputParameter](#WorkflowOutputParameter) for selecting among null and
-          non-null source values
-        * Add abstract [Operation](#Operation) that can be used as a
-          no-op stand-in to describe abstract workflows.
-        * [Workflow](#Workflow), [ExpressionTool](#ExpressionTool) and
-          [Operation](#Operation) can now express `intent` with an
-          identifier for the type of computational operation.
-        * Clarify there are no limits on the size of file literal `contents`.
-        * When using `loadContents` it now must fail when attempting to
-          load a file greater than 64 KiB instead of silently truncating
-          the data.
-        * Note that only enum and record types can be typedef-ed
-        * Escaping in [string interpolation](#String_Interpolation) has
-          been added to the specification along with conformance tests.
-        * Added discussion of [packed documents](#Packed_documents).
-        * Specify behavior when `source` is a single-item list and no
-          linkMerge is set.
-        * Added discussion about handling different document versions.
-        * Added definition of **data link**
 
-      See also the [CWL Command Line Tool Description, v1.2 changelog](CommandLineTool.html#Changelog).
+      See also the [CWL Command Line Tool Description, v1.3.0-dev1 changelog](CommandLineTool.html#Changelog).
       For other changes since CWL v1.0, see the
-      [CWL Workflow Description, v1.1 changelog](https://www.commonwl.org/v1.1/Workflow.html#Changelog).
-
-      [`cwl-upgrader`](https://github.com/common-workflow-language/cwl-upgrader) can
-      be used for upgrading CWL documents from version `draft-3`, `v1.0`, and `v1.1` to `v1.2`.
+      [CWL Workflow Description, v1.1 changelog](https://www.commonwl.org/v1.1/Workflow.html#Changelog)
+      and
+      [CWL Workflow Description, v1.2 changelog](https://www.commonwl.org/v1.2/Workflow.html#Changelog)
 
       ## Purpose
 
