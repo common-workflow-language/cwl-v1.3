@@ -36,7 +36,7 @@ Note:
   Example: RUNNER=cwltool EXTRA=--enable-dev
 EOF
 
-CWL_VER=v1.2
+CWL_VER=v1.3.0-dev1
 TEST_n=""
 TEST_N=""
 TEST_s=""
