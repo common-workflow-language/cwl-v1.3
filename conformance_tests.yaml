@@ -3392,3 +3392,5 @@
     }
   }
   tags: [ required, command_line_tool ]
+
+- $import: tests/loop/test-index.yaml
