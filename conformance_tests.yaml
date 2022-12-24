@@ -3525,3 +3525,5 @@
       an_array_of_mixed_booleans: [ false, true, false ]
       an_array_of_trues: [ true, true, true ]
       an_int: 42
+
+- $import: tests/loop/test-index.yaml
