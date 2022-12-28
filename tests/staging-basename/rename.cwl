@@ -1,5 +1,5 @@
 class: ExpressionTool
-cwlVersion: v1.2
+cwlVersion: v1.3.0-dev1
 inputs:
   f1: File
   newname: string

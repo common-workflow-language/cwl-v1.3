@@ -3,7 +3,7 @@
 #
 class: Workflow
 doc: "Reverse the lines in a document, then sort those lines."
-cwlVersion: v1.2
+cwlVersion: v1.3.0-dev1
 
 # Requirements & hints specify prerequisites and extensions to the workflow.
 # In this example, DockerRequirement specifies a default Docker container

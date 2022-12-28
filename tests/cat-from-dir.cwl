@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
-cwlVersion: v1.2
+cwlVersion: v1.3.0-dev1
 
 inputs:
   dir1: Directory
