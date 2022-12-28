@@ -6,7 +6,7 @@ $schemas:
   - foaf.rdf
   - dcterms.rdf
 
-cwlVersion: v1.2
+cwlVersion: v1.3.0-dev1
 class: CommandLineTool
 doc: "Test that a command line document with metadata is executed successfully."
 

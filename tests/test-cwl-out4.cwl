@@ -1,6 +1,7 @@
 class: CommandLineTool
-cwlVersion: v1.2
-
+cwlVersion: v1.3.0-dev1
+requirements:
+  - class: ShellCommandRequirement
 hints:
   DockerRequirement:
     dockerPull: docker.io/debian:stable-slim
@@ -19,5 +20,3 @@ stdout: cwl.output.json
 outputs:
   - id: foo
     type: File
-
-

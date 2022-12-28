@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 class: Workflow
-cwlVersion: v1.2
+cwlVersion: v1.3.0-dev1
 
 doc: |
   The entire test should take ~24 seconds.  Test that the 20 second

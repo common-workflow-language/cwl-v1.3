@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 # See https://github.com/jeremiahsavage/cwl_schemadef/, thanks to Jeremiah H. Savage.
-cwlVersion: v1.2
+cwlVersion: v1.3.0-dev1
 class: Workflow
 
 requirements:

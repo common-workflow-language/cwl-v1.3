@@ -1,5 +1,5 @@
 class: Workflow
-cwlVersion: v1.2
+cwlVersion: v1.3.0-dev1
 inputs:
   test: boolean
   val:
