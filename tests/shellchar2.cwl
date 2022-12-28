@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 class: CommandLineTool
-cwlVersion: v1.2
+cwlVersion: v1.3.0-dev1
 doc: |
   Ensure that `shellQuote: true` is the default behavior when
   ShellCommandRequirement is in effect.

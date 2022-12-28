@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.3.0-dev1
 
 class: CommandLineTool
 
