@@ -182,18 +182,46 @@ $graph:
     - all_non_null
 
 
-- name: WorkflowOutputParameter
+- name: Sink
   type: record
-  extends: OutputParameter
-  docParent: "#Workflow"
-  doc: |
-    Describe an output parameter of a workflow.  The parameter must be
-    connected to one or more parameters defined in the workflow that
-    will provide the value of the output parameter. It is legal to
-    connect a WorkflowInputParameter to a WorkflowOutputParameter.
+  abstract: true
+  fields:
+    - name: linkMerge
+      type: LinkMergeMethod?
+      jsonldPredicate: "cwl:linkMerge"
+      default: merge_nested
+      doc: |
+        The method to use to merge multiple inbound links into a single array.
+        If not specified, the default method is "merge_nested".
+    - name: pickValue
+      type: [ "null", PickValueMethod ]
+      jsonldPredicate: "cwl:pickValue"
+      doc: |
+        The method to use to choose non-null elements among multiple sources.
 
-    See [WorkflowStepInput](#WorkflowStepInput) for discussion of
-    `linkMerge` and `pickValue`.
+
+- name: InputSink
+  type: record
+  extends: Sink
+  abstract: true
+  fields:
+    - name: source
+      doc: |
+        Specifies one or more workflow parameters that will provide input to
+        the underlying step parameter.
+      jsonldPredicate:
+        "_id": "cwl:source"
+        "_type": "@id"
+        refScope: 2
+      type:
+        - string?
+        - string[]?
+
+
+- name: OutputSink
+  type: record
+  extends: Sink
+  abstract: true
   fields:
     - name: outputSource
       doc: |
@@ -209,20 +237,21 @@ $graph:
       type:
         - string?
         - string[]?
-    - name: linkMerge
-      type: ["null", LinkMergeMethod]
-      jsonldPredicate: "cwl:linkMerge"
-      default: merge_nested
-      doc: |
-        The method to use to merge multiple sources into a single array.
-        If not specified, the default method is "merge_nested".
 
-    - name: pickValue
-      type: ["null", PickValueMethod]
-      jsonldPredicate: "cwl:pickValue"
-      doc: |
-        The method to use to choose non-null elements among multiple sources.
 
+- name: WorkflowOutputParameter
+  type: record
+  extends: [OutputParameter, OutputSink]
+  docParent: "#Workflow"
+  doc: |
+    Describe an output parameter of a workflow.  The parameter must be
+    connected to one or more parameters defined in the workflow that
+    will provide the value of the output parameter. It is legal to
+    connect a WorkflowInputParameter to a WorkflowOutputParameter.
+
+    See [WorkflowStepInput](#WorkflowStepInput) for discussion of
+    `linkMerge` and `pickValue`.
+  fields:
     - name: type
       type:
         - CWLType
@@ -246,38 +275,9 @@ $graph:
         Specify valid types of data that may be assigned to this parameter.
 
 
-- name: Sink
-  type: record
-  abstract: true
-  fields:
-    - name: source
-      doc: |
-        Specifies one or more workflow parameters that will provide input to
-        the underlying step parameter.
-      jsonldPredicate:
-        "_id": "cwl:source"
-        "_type": "@id"
-        refScope: 2
-      type:
-        - string?
-        - string[]?
-    - name: linkMerge
-      type: LinkMergeMethod?
-      jsonldPredicate: "cwl:linkMerge"
-      default: merge_nested
-      doc: |
-        The method to use to merge multiple inbound links into a single array.
-        If not specified, the default method is "merge_nested".
-    - name: pickValue
-      type: ["null", PickValueMethod]
-      jsonldPredicate: "cwl:pickValue"
-      doc: |
-        The method to use to choose non-null elements among multiple sources.
-
-
 - type: record
   name: WorkflowStepInput
-  extends: [Identified, Sink, LoadContents, Labeled]
+  extends: [Identified, InputSink, LoadContents, Labeled]
   docParent: "#WorkflowStep"
   doc: |
     The input of a workflow step connects an upstream parameter (from the
