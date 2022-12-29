@@ -23,7 +23,7 @@ jobs:
           python-version: '3.9.x'
       
       - name: Setup prerequirements
-        run: pip install cwltest cwltool
+        run: pip install cwltest "https://github.com/common-workflow-language/cwltool/archive/refs/heads/cwl-v1.3.zip"
       
       - name: Run tests against the reference runner
-        run: ./run_test.sh RUNNER=cwltool "EXTRA=--parallel --relax-path-checks" -j$(nproc)
+        run: ./run_test.sh RUNNER=cwltool "EXTRA=--parallel --relax-path-checks --enable-dev" -j$(nproc)
