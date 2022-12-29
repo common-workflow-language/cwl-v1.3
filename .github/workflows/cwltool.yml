@@ -15,7 +15,7 @@ jobs:
   test_with_cwltool:
     runs-on: ubuntu-latest
     env:
-      CWLTOOL_OPTIONS: "--parallel --relax-path-checks"
+      CWLTOOL_OPTIONS: "--parallel --relax-path-checks --enable-dev"
     steps:
       - uses: actions/checkout@v4
 

@@ -1,11 +1,12 @@
-cwlVersion: v1.0
+cwlVersion: v1.3.0-dev1
 class: Workflow
 
 inputs:
   inp1:
     type: File
     secondaryFiles:
-      - ".2"
+      - pattern: ".2"
+        required: true
     default:
       class: File
       location: hello.txt

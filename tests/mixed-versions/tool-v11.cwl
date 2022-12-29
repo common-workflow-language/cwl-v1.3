@@ -6,5 +6,6 @@ inputs:
     secondaryFiles:
       - pattern: ".2"
         required: true
-outputs: []
-arguments: [echo, $(inputs.inp1)]
+outputs:
+ result: stdout
+arguments: [echo, $(inputs.inp1.basename)]
