@@ -9,5 +9,6 @@ inputs:
 requirements:
   ResourceRequirement:
     coresMin: .5
-outputs: []
-arguments: [echo, $(inputs.inp1)]
+outputs:
+ result: stdout
+arguments: [echo, $(inputs.inp1.basename)]
