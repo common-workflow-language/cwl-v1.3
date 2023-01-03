@@ -445,20 +445,8 @@ $graph:
 
 - name: LoopInput
   type: record
-  extends: [Identified, Sink]
+  extends: [Identified, OutputSink]
   fields:
-    - name: source
-      doc: |
-        Specifies one or more of the step output parameters that will
-        provide input to the loop iterations after the first one (inputs
-        of the first iteration are the step input parameters).
-      jsonldPredicate:
-        "_id": "cwl:source"
-        "_type": "@id"
-        refScope: 1
-      type:
-        - string?
-        - string[]?
     - name: default
       type: ["null", File, Directory, Any]
       doc: |
@@ -713,7 +701,7 @@ $graph:
       jsonldPredicate:
         _id: "cwl:loop"
         mapSubject: id
-        mapPredicate: source
+        mapPredicate: outputSource
     - name: outputMethod
       doc: |
         Required if `loop` is defined.
