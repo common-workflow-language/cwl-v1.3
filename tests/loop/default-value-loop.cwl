@@ -17,7 +17,7 @@ steps:
     when: $(inputs.i1 < 20)
     loop:
       i1:
-        source: o1
+        outputSource: o1
         default: 5
     outputMethod: all
     run:
