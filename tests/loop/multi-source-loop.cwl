@@ -19,7 +19,7 @@ steps:
     when: $(inputs.i1 < 20)
     loop:
       i1:
-        source: [ osmall, obig ]
+        outputSource: [ osmall, obig ]
         pickValue: the_only_non_null
     outputMethod: all
     run:
