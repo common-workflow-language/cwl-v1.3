@@ -10,7 +10,7 @@ This is a documentation of the design and design decisions for conditionals as o
 ![dual scatter nested](conditionals/conditional-patterns-3.png)
 ![dual scatter flattened](conditionals/conditional-patterns-4.png)
 
-The design adds a new field `when` to a `WorkflowStep`. This field is an expression that
+The design adds a new field `when` to a `AbstractWorkflowStep`. This field is an expression that
 evaluates to `True` or `False`. The executor runs the step if the value is `True`,
 skips it if `False`. A skipped step produces `null` values on all its outputs.
 
@@ -114,7 +114,7 @@ outputs:
     pickValue: first_non_null
 ```
 
-The new syntax adds a single field to `WorkflowStep` (`when`) and a new 
+The new syntax adds a single field to `AbstractWorkflowStep` (`when`) and a new 
 operator called `pickValue` to the `WorkflowStepInput` and 
 `WorkflowOutputParameter`. This is a fairly non-intrusive 
 modification, fully backwards compatible (it's an addition, not a modification) and allows
