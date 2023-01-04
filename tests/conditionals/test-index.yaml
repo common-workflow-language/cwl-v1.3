@@ -185,7 +185,7 @@
     out1: [
       "foo 2", "foo 4", "foo 6",
       "bar 1", "bar 3", "bar 5"]
-  tags: [ conditional, inline_javascript, scatter, multiple, workflow ]
+  tags: [ conditional, inline_javascript, scatter, multiple_input, workflow ]
 
 - id: direct_optional_null_result_nojs
   doc: simplest conditional pattern (true), no javascript
@@ -369,7 +369,7 @@
     out1: [
       "foo 2", "foo 4", "foo 6",
       "bar 1", "bar 3", "bar 5"]
-  tags: [ conditional, scatter, multiple, workflow ]
+  tags: [ conditional, scatter, multiple_input, workflow ]
 
 
 - id: cond-with-defaults-1
@@ -393,7 +393,7 @@
             "size": 34
         }
     ]
-  tags: [ conditional, scatter, multiple, workflow ]
+  tags: [ conditional, scatter, multiple_input, workflow ]
 
 - id: cond-with-defaults-2
   doc: "Default inputs, choose step to run based on what was provided, second case"
@@ -409,4 +409,4 @@
             "size": 12
         }
     ]
-  tags: [ conditional, scatter, multiple, workflow ]
+  tags: [ conditional, scatter, multiple_input, workflow ]
