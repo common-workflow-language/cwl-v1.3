@@ -144,7 +144,7 @@ We will use this single entry to explain the format
      Must include one or more of the following tags: `command_line_tool`, `expression_tool` or `workflow`.
      If the test does not test any optional features, the tag `required` is required.
 
-Because `conformance_tests.yaml` is a `schema-salad` processed document, [`$import`](https://www.commonwl.org/v1.2/SchemaSalad.html#Import)
+Because `conformance_tests.yaml` is a `schema-salad` processed document, [`$import`](https://www.commonwl.org/v1.3/SchemaSalad.html#Import)
 can be used to organize the tests into separate files.
 
 Currently, the main file is too big (over 3400 lines); we are slowly re-organizing it.
@@ -166,7 +166,7 @@ At any level, if there is an extra field, then that will be considered an error.
 An exception to this is `class: File` and `class: Directory` objects, the `cwl-runner` under test can add additional fields here without causing a test to fail.
 Likewise, if you don't want to test some aspect of a `class: File` or `class: Directory` object (like `nameext`) you can just omit it.
 
-[According to the CWL standards](https://www.commonwl.org/v1.2/CommandLineTool.html#File), the format of the `location` field in 
+[According to the CWL standards](https://www.commonwl.org/v1.3/CommandLineTool.html#File), the format of the `location` field in 
 `class: File` and `class: Directory` is implementation specific and we should not be testing them.
 Please remember to use `location: Any` for them.
 
