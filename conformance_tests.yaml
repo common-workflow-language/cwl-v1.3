@@ -3392,3 +3392,9 @@
     }
   }
   tags: [ required, command_line_tool ]
+
+- id: invalid_expression_tool_output
+  tool: tests/null-expression4-tool.cwl
+  doc: Test that the output objects returned by an ExpressionTool process are validated against the outputs schema.
+  should_fail: true
+  tags: [ inline_javascript, expression_tool ]
