@@ -2,13 +2,14 @@
 
 Author:
 
-* Peter Amstutz <peter.amstutz@curii.com>, Arvados Project, Curii Corporation
+* Peter Amstutz <peter.amstutz@curii.com>, Curii Corporation
 
 Contributors:
 
 * The developers of Apache Avro
 * The developers of JSON-LD
 * Nebojša Tijanić <nebojsa.tijanic@sbgenomics.com>, Seven Bridges Genomics
+* Michael R. Crusoe, ELIXIR-DE
 
 # Abstract
 
@@ -86,6 +87,13 @@ specification, the following changes have been made:
   is poorly documented, not included in conformance testing,
   and not widely supported.
 
+## Introduction to v1.2
+
+This is the fourth version of the Schema Salad specification. It was created to
+ease the development of extensions to CWL v1.2. The only change is that
+inherited records can narrow the types of fields if those fields are re-specified
+with a matching jsonldPredicate.
+
 ## References to Other Specifications
 
 **Javascript Object Notation (JSON)**: http://json.org
@@ -139,7 +147,7 @@ enable or disable the behavior described.
 ## Data concepts
 
 An **object** is a data structure equivalent to the "object" type in JSON,
-consisting of an unordered set of name/value pairs (referred to here as
+consisting of a unordered set of name/value pairs (referred to here as
 **fields**) and where the name is a string and the value is a string, number,
 boolean, array, or object.
 
@@ -248,8 +256,11 @@ rules:
   field.
 
   * If the value of `jsonldPredicate` is an object, and that
-  object contains the field `_type` with the value `@id`, the field is a
-  link field subject to [link validation](#Link_validation).
+  object contains the field `_type` with the value `@id`, the
+  field is a link field.  If the field `jsonldPredicate` also
+  has the field `identity` with the value `true`, the field is
+  resolved with [identifier resolution](#Identifier_resolution).
+  Otherwise it is resolved with [link resolution](#Link_resolution).
 
   * If the value of `jsonldPredicate` is an object which contains the
   field `_type` with the value `@vocab`, the field value is subject to
