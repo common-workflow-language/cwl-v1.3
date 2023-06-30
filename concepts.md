@@ -309,7 +309,8 @@ An implementation must resolve [$import](SchemaSalad.html#Import) and
 
 Another transformation defined in Schema salad is simplification of data type definitions.
 Type `<T>` ending with `?` should be transformed to `[<T>, "null"]`.
-Type `<T>` ending with `[]` should be transformed to `{"type": "array", "items": <T>}`
+Type `<T>` ending with `[]` should be transformed to `{"type": "array", "items": <T>}`.
+This simplification should be applied recursively.
 
 ## Extensions and metadata
 
