@@ -1,4 +1,4 @@
-saladVersion: v1.1
+saladVersion: v1.3
 $base: "https://w3id.org/cwl/cwl#"
 
 $namespaces:
@@ -388,13 +388,14 @@ $graph:
 
   fields:
     - name: default
-      type: ["null", File, Directory, Any]
+      type: CWLObjectType?
       doc: |
         The default value for this parameter to use if either there is no
         `source` field, or the value produced by the `source` is `null`.  The
         default must be applied prior to scattering or evaluating `valueFrom`.
       jsonldPredicate:
         _id: "sld:default"
+        _container: "@list"
         noLinkCheck: true
     - name: valueFrom
       type:
