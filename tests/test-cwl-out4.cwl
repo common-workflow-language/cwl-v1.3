@@ -8,11 +8,15 @@ hints:
 
 inputs: []
 
+baseCommand: sh
+
+arguments:
+   - -c
+   - |
+     echo foo > foo && echo '{"foo": {"location": "foo", "class": "File"} }'
+
+stdout: cwl.output.json
+
 outputs:
   - id: foo
     type: File
-
-arguments:
-   - valueFrom: >
-       echo foo > foo && echo '{"foo": {"location": "foo", "class": "File"} }' > cwl.output.json
-     shellQuote: false
