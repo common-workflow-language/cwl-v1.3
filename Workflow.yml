@@ -34,17 +34,12 @@ $graph:
     - {$include: intro.md}
 
     - |
-
       ## Introduction to CWL Workflow standard v1.3.0-dev1
 
       This specification represents the latest development version from the
       CWL group.
 
-      
-
       ## Changelog
-
-
       See also the [CWL Command Line Tool Description, v1.3.0-dev1 changelog](CommandLineTool.html#Changelog).
       For other changes since CWL v1.0, see the
       [CWL Workflow Description, v1.1 changelog](https://www.commonwl.org/v1.1/Workflow.html#Changelog)
@@ -92,6 +87,8 @@ $graph:
         typeDSL: True
       doc: |
         Specify valid types of data that may be assigned to this parameter.
+        Note that this field just acts as a hint, as the outputs of an
+        ExpressionTool process are always considered valid.
 
 
 - name: WorkflowInputParameter
@@ -478,7 +475,7 @@ $graph:
 
     The `scatter` field specifies one or more input parameters which will be
     scattered.  An input parameter may be listed more than once.  The declared
-    type of each input parameter is implicitly becomes an array of items of the
+    type of each input parameter implicitly becomes an array of items of the
     input parameter type.  If a parameter is listed more than once, it becomes
     a nested array.  As a result, upstream parameters which are connected to
     scattered parameters must be arrays.
