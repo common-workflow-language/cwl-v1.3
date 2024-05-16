@@ -61,7 +61,6 @@ This becomes:
 }
 ```
 
-<a name="import_example2" />
 ### Import example: flattening the `$import`ed array
 
 import.json:
