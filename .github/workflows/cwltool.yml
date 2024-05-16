@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.9.x'
-      
+
       - name: Setup prerequirements
         run: pip install "cwltest>=2.3" pytest-xdist "cwltool>=3.1.20230213100550"
 
