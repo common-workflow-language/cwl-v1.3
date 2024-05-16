@@ -127,6 +127,7 @@ inputrecordfield
 inputrecordschema
 inputparameter
 inputschema
+inputsink
 institut
 interoperable
 invocab
@@ -186,6 +187,7 @@ outputenumschema
 outputeval
 outputformat
 outputschema
+outputsink
 outputsource
 outputparameter
 outputrecordfield
