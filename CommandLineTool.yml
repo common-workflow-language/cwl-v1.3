@@ -1397,3 +1397,80 @@ $graph:
       doc: |
         The time limit, in seconds.  A time limit of zero means no
         time limit.  Negative time limits are an error.
+
+- name: CUDARequirement
+  type: record
+  extends: cwl:ProcessRequirement
+  inVocab: false
+  doc: |
+    Require support for NVIDA CUDA (GPU hardware acceleration).
+
+    See discussion on (ResourceRequirement)(#ResourceRequirement) for
+    rules on interpreting "min" and "max" values of `cudaDeviceCount`
+    and `cudaRam`.
+  fields:
+    class:
+      type: string
+      doc: 'cwl:CUDARequirement'
+      jsonldPredicate:
+        _id: "@type"
+        _type: "@vocab"
+    cudaVersionMin:
+      type: string
+      doc: |
+        Minimum CUDA version to run the software, in X.Y format.  This
+        corresponds to a CUDA SDK release.  When running directly on
+        the host (not in a container) the host must have a compatible
+        CUDA SDK (matching the exact version, or, starting with CUDA
+        11.3, matching major version).  When run in a container, the
+        container image should provide the CUDA runtime, and the host
+        driver is injected into the container.  In this case, because
+        CUDA drivers are backwards compatible, it is possible to
+        use an older SDK with a newer driver across major versions.
+
+        See https://docs.nvidia.com/deploy/cuda-compatibility/ for
+        details.
+    cudaComputeCapability:
+      type:
+        - 'string'
+        - 'string[]'
+      doc: |
+        CUDA hardware capability required to run the software, in X.Y
+        format.
+
+        * If this is a single value, it defines only the minimum
+          compute capability.  GPUs with higher capability are also
+          accepted.
+
+        * If it is an array value, then only select GPUs with compute
+          capabilities that explicitly appear in the array.
+    cudaDeviceCountMin:
+      type: ['null', int, cwl:Expression]
+      doc: |
+        Minimum number of GPU devices to request (default 1).
+
+        The reported number of GPU devices reserved for the process,
+        which is available to expressions on the CommandLineTool as
+        `runtime.cudaDeviceCount`, must be a non-zero integer.
+    cudaDeviceCountMax:
+      type: ['null', int, cwl:Expression]
+      doc: |
+        Maximum number of GPU devices to request.
+    cudaRamMin:
+      type: ['null', int, long, float, cwl:Expression]
+      doc: |
+        Minimum amount of GPU RAM per device to reserve, in mebibytes
+        (2**20).  Default is 256.
+
+        May be a fractional value.  If so, the actual RAM request must
+        be rounded up to the next whole number.  The reported amount
+        of GPU RAM reserved for the process, which is available to
+        expressions on the CommandLineTool as `runtime.cudaRam`, must
+        be a non-zero integer.
+    cudaRamMax:
+      type: ['null', int, long, float, cwl:Expression]
+      doc: |
+        Maximum amount of GPU RAM per device to reserve, in mebibytes
+        (2**20).
+
+        See `cudaRamMin` for discussion about fractional RAM requests.
