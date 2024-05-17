@@ -424,8 +424,8 @@ $graph:
         the caller, and platform should look up the secret to fill in
         the input parameter value when not provided by the caller.
 
-        An explict value provided by the caller always takes
-        precidence over looking up a value, i.e. checking the secret
+        An explicit value provided by the caller always takes
+        precedence over looking up a value, i.e. checking the secret
         store must only happen if the caller did not provide an
         explicit value for this secret parameter, or the value is
         null.
