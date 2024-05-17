@@ -385,6 +385,61 @@ $graph:
         from the input object, or if the value of the parameter in the input
         object is `null`.  Default values are applied before evaluating expressions
         (e.g. dependent `valueFrom` fields).
+    - name: secret
+      type: ["null", boolean, string]
+      doc: |
+        Indicates this input parameter value is sensitive.
+        Implementations should apply special handling to secret values
+        to avoid displaying them in logs, including them in output, or
+        otherwise making them visible or accessible in any way beyond
+        what is required to make the value of the secret input
+        parameter available to workflow processes that need it.
+
+        This feature is intended to provide a safer way to handle
+        credentials such as passwords and API tokens.
+
+        Possible values of the `secret` field can be:
+
+        * null or not provided (default, the input parameter is not secret)
+        * false (same as null)
+        * true (parameter is secret)
+        * a non-empty string (parameter is secret, and may be looked up in platform storage)
+
+        If the value of `secret` is a string, this is a lookup key to
+        be used to fetch a secret value from the workflow platform
+        secret store.  This assumes a model where a non-sensitive
+        lookup key is passed to the secret store and a sensitive
+        string value (the password, API token, etc) is returned.
+
+        The format of this lookup key, as well as management, access
+        permissions, and authentication for the secret store are
+        implementation specific and out of scope for this document.
+
+        If the input parameter is a secret, the `type` of the input
+        parameter must only consist of `string`, `array<string>`, or
+        `null`.
+
+        If `secret` is a string and the platform supports looking up
+        credentials, the input parameter is implicitly optional for
+        the caller, and platform should look up the secret to fill in
+        the input parameter value when not provided by the caller.
+
+        An explict value provided by the caller always takes
+        precidence over looking up a value, i.e. checking the secret
+        store must only happen if the caller did not provide an
+        explicit value for this secret parameter, or the value is
+        null.
+
+        If the platform does not support secrets lookup, a string
+        value of `secret` is treated like boolean true, indicating the
+        parameter is secret, but must be provided in the input
+        document (unless marked as optional).
+
+        Failure to look up the secret (for example, due to denial of
+        access) may yield a value of "null".  Execution continues only
+        if the parameter is optional (i.e. "null" is an accepted
+        type).  However implementations may, at user option, treat
+        failure to look up a secret as a fatal error.
 
 
 - name: OutputParameter
