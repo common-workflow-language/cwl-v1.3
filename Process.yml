@@ -441,6 +441,13 @@ $graph:
         type).  However implementations may, at user option, treat
         failure to look up a secret as a fatal error.
 
+        Workflow engines should verify that, when a secret is passed
+        through multiple levels (e.g. from a parent workflow to a
+        sub-workflow to a command line tool), it is secret at every
+        level, for example through a check that secret inputs are only
+        be passed to workflow steps where the inputs are also marked
+        as secret, or that secret inputs to a workflow step are
+        themselves secret at the parent workflow level.
 
 - name: OutputParameter
   type: record
