@@ -41,9 +41,10 @@ $graph:
 
       ## Changelog
 
-      * Added `secret` option on [input parameters](#InputParameter)
-        to request special handling of secrets such as passwords and
-        API tokens.
+      * Added [SecretText](#SecretText) object type to represent input
+        types that should be kept confidential by the workflow runner,
+        such as passwords.  SecretText can also be used to refer to
+        credentials storage in a platform secrets management server.
 
       See also the [CWL Command Line Tool Description, v1.3.0-dev1 changelog](CommandLineTool.html#Changelog).
       For other changes since CWL v1.0, see the
