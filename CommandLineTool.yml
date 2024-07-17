@@ -1397,3 +1397,169 @@ $graph:
       doc: |
         The time limit, in seconds.  A time limit of zero means no
         time limit.  Negative time limits are an error.
+
+
+- name: GPURequirement
+  type: record
+  abstract: true
+  extends: ProcessRequirement
+  doc: |
+    Require support for GPU hardware acceleration.
+
+    See discussion on (ResourceRequirement)(#ResourceRequirement) for
+    rules on interpreting "min" and "max" values of `cudaDeviceCount`
+    and `cudaRam`.
+  fields:
+    gpuDeviceCountMin:
+      type: ['null', int, cwl:Expression]
+      doc: |
+        Minimum number of GPU devices to request (default 1).
+
+        The reported number of GPU devices reserved for the process,
+        which is available to expressions on the CommandLineTool as
+        `runtime.gpuDeviceCount`, must be a non-zero integer.
+    gpuDeviceCountMax:
+      type: ['null', int, cwl:Expression]
+      doc: |
+        Maximum number of GPU devices to request.
+    gpuRamMin:
+      type: ['null', int, long, float, cwl:Expression]
+      doc: |
+        Minimum amount of GPU RAM per device to reserve, in mebibytes
+        (2**20).  Default is 256.
+
+        May be a fractional value.  If so, the actual RAM request must
+        be rounded up to the next whole number.  The reported amount
+        of GPU RAM reserved for the process, which is available to
+        expressions on the CommandLineTool as `runtime.gpuRam`, must
+        be a non-zero integer.
+    gpuRamMax:
+      type: ['null', int, long, float, cwl:Expression]
+      doc: |
+        Maximum amount of GPU RAM per device to reserve, in mebibytes
+        (2**20).
+
+        See `gpuRamMin` for discussion about fractional RAM requests.
+
+
+- name: CUDARequirement
+  type: record
+  extends: GPURequirement
+  doc: |
+    Require support for NVIDA CUDA (GPU hardware acceleration).
+
+    See discussion on (ResourceRequirement)(#ResourceRequirement) for
+    rules on interpreting "min" and "max" values of `cudaDeviceCount`
+    and `cudaRam`.
+  fields:
+    class:
+      type: string
+      doc: 'cwl:CUDARequirement'
+      jsonldPredicate:
+        _id: "@type"
+        _type: "@vocab"
+    cudaVersionMin:
+      type: string
+      doc: |
+        Minimum CUDA version to run the software, in X.Y format.  This
+        corresponds to a CUDA SDK release.  When running directly on
+        the host (not in a container) the host must have a compatible
+        CUDA SDK (matching the exact version, or, starting with CUDA
+        11.3, matching major version).  When run in a container, the
+        container image should provide the CUDA runtime, and the host
+        driver is injected into the container.  In this case, because
+        CUDA drivers are backwards compatible, it is possible to
+        use an older SDK with a newer driver across major versions.
+
+        See https://docs.nvidia.com/deploy/cuda-compatibility/ for
+        details.
+    cudaComputeCapability:
+      type:
+        - 'string'
+        - 'string[]'
+      doc: |
+        CUDA hardware capability required to run the software, in X.Y
+        format.
+
+        * If this is a single value, it defines only the minimum
+          compute capability.  GPUs with higher capability are also
+          accepted.
+
+        * If it is an array value, then only select GPUs with compute
+          capabilities that explicitly appear in the array.
+
+
+- name: VulkanRequirement
+  type: record
+  extends: GPURequirement
+  doc: |
+    Require support for Khronos Vulkan (GPU hardware acceleration).
+  fields:
+    class:
+      type: string
+      doc: 'cwl:VulkanRequirement'
+      jsonldPredicate:
+        _id: "@type"
+        _type: "@vocab"
+    vulkanVersionMin:
+      type: string
+      doc: |
+        Minimum Vulkan API version to run the software, in X.Y format.
+    vulkanExtensions:
+      type:
+        - 'null'
+        - 'string[]'
+      doc: |
+        Vulkan extensions that are required to this software.  Here is
+        a list of registered extensions for Vulkan 1.3:
+
+        https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap56.html
+
+
+- name: OpenCLRequirement
+  type: record
+  extends: GPURequirement
+  doc: |
+    Require support for Khronos OpenCL (GPU hardware acceleration).
+  fields:
+    class:
+      type: string
+      doc: 'cwl:OpenCLRequirement'
+      jsonldPredicate:
+        _id: "@type"
+        _type: "@vocab"
+    openCLVersionMin:
+      type: string
+      doc: |
+        Minimum OpenCL API version to run the software, in X.Y format.
+    openCLExtensions:
+      type:
+        - 'null'
+        - 'string[]'
+      doc: |
+        OpenCL extensions that are required to this software.  Here is
+        a list of registered extensions for OpenCL:
+
+        https://registry.khronos.org/OpenCL/
+
+- name: ROCmRequirement
+  type: record
+  extends: GPURequirement
+  doc: |
+    Require support for AMD ROCm (GPU hardware acceleration).
+  fields:
+    class:
+      type: string
+      doc: 'cwl:ROCmRequirement'
+      jsonldPredicate:
+        _id: "@type"
+        _type: "@vocab"
+    rocmVersion:
+      type:
+        - string
+        - string[]
+      doc: |
+        Major ROCm HIP and HSA Runtime version(s) that can run the
+        software, in X.Y format.
+
+        https://github.com/ROCm/ROCm/pull/2319/files
