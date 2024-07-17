@@ -1493,7 +1493,7 @@ $graph:
   type: record
   extends: GPURequirement
   doc: |
-    Require support for Vulkan (GPU hardware acceleration).
+    Require support for Khronos Vulkan (GPU hardware acceleration).
   fields:
     class:
       type: string
@@ -1520,7 +1520,7 @@ $graph:
   type: record
   extends: GPURequirement
   doc: |
-    Require support for OpenCL (GPU hardware acceleration).
+    Require support for Khronos OpenCL (GPU hardware acceleration).
   fields:
     class:
       type: string
@@ -1541,3 +1541,25 @@ $graph:
         a list of registered extensions for OpenCL:
 
         https://registry.khronos.org/OpenCL/
+
+- name: ROCmRequirement
+  type: record
+  extends: GPURequirement
+  doc: |
+    Require support for AMD ROCm (GPU hardware acceleration).
+  fields:
+    class:
+      type: string
+      doc: 'cwl:ROCmRequirement'
+      jsonldPredicate:
+        _id: "@type"
+        _type: "@vocab"
+    rocmVersion:
+      type:
+        - string
+        - string[]
+      doc: |
+        Major ROCm HIP and HSA Runtime version(s) that can run the
+        software, in X.Y format.
+
+        https://github.com/ROCm/ROCm/pull/2319/files
