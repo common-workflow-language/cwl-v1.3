@@ -47,6 +47,17 @@ $graph:
         feature to manage loop output data history.
       
       See also the [CWL Command Line Tool Description, v1.3.0-dev1 changelog](CommandLineTool.html#Changelog).
+
+      * Workflow steps may now specify iterative execution.  See
+        [LoopWorkflowStep](#LoopWorkflowStep)
+      * Including
+        [StepInputExpressionRequirement](#StepInputExpressionRequirement),
+        [MultipleInputFeatureRequirement](#MultipleInputFeatureRequirement),
+        [ScatterFeatureRequirement](#ScatterFeatureRequirement) and
+        [SubworkflowFeatureRequirement](#SubworkflowFeatureRequirement)
+        in `requirements` is no longer necessary to use the associated
+        feature.  These core features are now always available.
+
       For other changes since CWL v1.0, see the
       [CWL Workflow Description, v1.1 changelog](https://www.commonwl.org/v1.1/Workflow.html#Changelog)
       and
@@ -302,10 +313,6 @@ $graph:
 
     # Merging multiple inbound data links
 
-    To merge multiple inbound data links,
-    [MultipleInputFeatureRequirement](#MultipleInputFeatureRequirement) must be specified
-    in the workflow or workflow step requirements.
-
     If the sink parameter is an array, or named in a [workflow
     scatter](#ScatterWorkflowStep) operation, there may be multiple inbound
     data links listed in the `source` field.  The values from the
@@ -410,9 +417,6 @@ $graph:
         - Expression
       jsonldPredicate: "cwl:valueFrom"
       doc: |
-        To use valueFrom, [StepInputExpressionRequirement](#StepInputExpressionRequirement) must
-        be specified in the workflow or workflow step requirements.
-
         If `valueFrom` is a constant string value, use this as the value for
         this input parameter.
 
@@ -470,9 +474,6 @@ $graph:
         - Expression
       jsonldPredicate: "cwl:valueFrom"
       doc: |
-        To use valueFrom, [StepInputExpressionRequirement](#StepInputExpressionRequirement) must
-        be specified in the workflow or workflow step requirements.
-
         If `valueFrom` is a constant string value, use this as the value for
         this input parameter.
 
@@ -537,10 +538,6 @@ $graph:
     implementation does not support.
 
     # Subworkflows
-
-    To specify a nested workflow as part of a workflow step,
-    [SubworkflowFeatureRequirement](#SubworkflowFeatureRequirement) must be
-    specified in the workflow or workflow step requirements.
 
     It is a fatal error if a workflow directly or indirectly invokes itself as
     a subworkflow (recursive workflows are not allowed).
@@ -623,10 +620,6 @@ $graph:
   extends: AbstractWorkflowStep
   docParent: "#Workflow"
   doc: |
-    To use scatter/gather,
-    [ScatterFeatureRequirement](#ScatterFeatureRequirement) must be specified
-    in the workflow or workflow step requirements.
-
     A "scatter" operation specifies that the associated workflow step or
     subworkflow should execute separately over a list of input elements.  Each
     job making up a scatter operation is independent and may be executed
@@ -813,12 +806,11 @@ $graph:
     * If all workflow steps are executed and complete with `success`, then the
     workflow status is `success`.
 
-    # Extensions
+    # Complex steps
 
-    [ScatterFeatureRequirement](#ScatterFeatureRequirement) and
-    [SubworkflowFeatureRequirement](#SubworkflowFeatureRequirement) are
-    available as standard [extensions](#Extensions_and_Metadata) to core
-    workflow semantics.
+    Individual workflow steps may specify complex behavior.  Currently
+    this consists scatter/gather, conditional execution, iterative
+    execution (loops), or executing other workflows.
 
   fields:
     - name: "class"
@@ -847,6 +839,10 @@ $graph:
   name: SubworkflowFeatureRequirement
   extends: ProcessRequirement
   doc: |
+    **Deprecated as of v1.3** This feature is available by default,
+      workflows that use it do not need to declare it.  Including this
+      requirement is a no-op.
+
     Indicates that the workflow platform must support nested workflows in
     the `run` field of [AbstractWorkflowStep](#AbstractWorkflowStep).
   fields:
@@ -865,6 +861,10 @@ $graph:
   type: record
   extends: ProcessRequirement
   doc: |
+    **Deprecated as of v1.3** This feature is available by default,
+      workflows that use it do not need to declare it.  Including this
+      requirement is a no-op.
+
     Indicates that the workflow platform must support the `scatter` and
     `scatterMethod` fields of [ScatterWorkflowStep](#ScatterWorkflowStep).
   fields:
@@ -883,6 +883,10 @@ $graph:
   type: record
   extends: ProcessRequirement
   doc: |
+    **Deprecated as of v1.3** This feature is available by default,
+      workflows that use it do not need to declare it.  Including this
+      requirement is a no-op.
+
     Indicates that the workflow platform must support multiple inbound data links
     listed in the `source` field of [WorkflowStepInput](#WorkflowStepInput).
   fields:
@@ -901,6 +905,10 @@ $graph:
   name: StepInputExpressionRequirement
   extends: ProcessRequirement
   doc: |
+    **Deprecated as of v1.3** This feature is available by default,
+      workflows that use it do not need to declare it.  Including this
+      requirement is a no-op.
+
     Indicate that the workflow platform must support the `valueFrom` field
     of [WorkflowStepInput](#WorkflowStepInput).
   fields:
