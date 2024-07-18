@@ -711,6 +711,91 @@ $graph:
 
         If not specified, all exit codes except 0 are considered permanent failure.
 
+    - name: networkAccess
+      type: [boolean, Expression]
+      doc: |
+        Indicate whether a process requires outgoing IPv4/IPv6 network
+        access.  Choice of IPv4 or IPv6 is implementation and site
+        specific, correct tools must support both.
+
+        If `networkAccess` is false or not specified, tools must not
+        assume network access, except for localhost (the loopback device).
+
+        If `networkAccess` is true, the tool must be able to make outgoing
+        connections to network resources.  Resources may be on a private
+        subnet or the public Internet.  However, implementations and sites
+        may apply their own security policies to restrict what is
+        accessible by the tool.
+
+        Enabling network access does not imply a publicly routable IP
+        address or the ability to accept inbound connections.
+
+    - name: initialWorkDir
+      type:
+        - Expression
+        - type: array
+          items:
+            - "null"
+            - Dirent
+            - Expression
+            - File
+            - Directory
+            - type: array
+              items:
+                - File
+                - Directory
+      doc: |
+        Define a list of files and subdirectories that must be staged
+        by the workflow platform prior to executing the command line
+        tool.  Normally this is the designated output directory, but
+        when containers are used, it is possible to stage to other
+        locations, see discussion below.
+
+        Return type of each expression must validate as `["null",
+        File, Directory, Dirent, {type: array, items: [File,
+        Directory]}]`.
+
+        Each `File` or `Directory` that is returned by an Expression
+        must be added to the designated output directory prior to
+        executing the tool.
+
+        Each `Dirent` record that is listed or returned by an
+        expression specifies a file to be created or staged in the
+        designated output directory prior to executing the tool.
+
+        Expressions may return null, in which case they have no effect.
+
+        Files or Directories which are listed in the input parameters
+        and appear in `initialWorkDir` must have their `path` set to
+        their staged location.  If the same File or Directory appears
+        more than once in the `initialWorkDir`, the implementation
+        must choose exactly one value for `path`; how this value is
+        chosen is undefined.
+
+        Normally files are staged within the designated output
+        directory.  However, when running inside containers, files may
+        be staged at arbitrary locations, see discussion for
+        [`Dirent.entryname`](#Dirent).  Together with
+        `DockerRequirement.dockerOutputDirectory` it is possible to
+        control the locations of both input and output files when
+        running in containers.
+
+        Files listed in `inputs` that are not listed in
+        `initialWorkDir` shall be staged to an arbitrary location on
+        the file system.  This location must be outside the designated
+        output directory.
+
+    - name: envDef
+      type: EnvironmentDef[]
+      doc: |
+        Define a list of environment variables which will be set in
+        the execution environment of the tool.  See
+        [EnvironmentDef](#EnvironmentDef) for details.
+      jsonldPredicate:
+        mapSubject: envName
+        mapPredicate: envValue
+
+
 
 - type: record
   name: DockerRequirement
@@ -991,7 +1076,9 @@ $graph:
 - name: InitialWorkDirRequirement
   type: record
   extends: ProcessRequirement
-  doc:
+  doc: |
+    **Deprecated as of v1.3**  Prefer [CommandLineTool.initialWorkDir](#CommandLineTool)
+
     Define a list of files and subdirectories that must be staged by
     the workflow platform prior to executing the command line tool.
 
@@ -1059,6 +1146,8 @@ $graph:
   type: record
   extends: ProcessRequirement
   doc: |
+    **Deprecated as of v1.3**  Prefer [CommandLineTool.envDef](#CommandLineTool)
+
     Define a list of environment variables which will be set in the
     execution environment of the tool.  See `EnvironmentDef` for details.
   fields:
@@ -1291,6 +1380,8 @@ $graph:
   name: NetworkAccess
   extends: ProcessRequirement
   doc: |
+    **Deprecated as of v1.3**  Prefer [CommandLineTool.networkAccess](#CommandLineTool)
+
     Indicate whether a process requires outgoing IPv4/IPv6 network
     access.  Choice of IPv4 or IPv6 is implementation and site
     specific, correct tools must support both.
