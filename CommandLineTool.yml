@@ -726,7 +726,7 @@ $graph:
         If not specified, all exit codes except 0 are considered permanent failure.
 
     - name: networkAccess
-      type: [boolean, Expression]
+      type: ['null', boolean, Expression]
       jsonldPredicate: "cwl:NetworkAccess/networkAccess"
       doc: |
         Indicate whether a process requires outgoing IPv4/IPv6 network
@@ -747,6 +747,7 @@ $graph:
 
     - name: initialWorkDir
       type:
+        - 'null'
         - Expression
         - type: array
           items:
@@ -801,7 +802,7 @@ $graph:
         output directory.
 
     - name: envDef
-      type: EnvironmentDef[]
+      type: EnvironmentDef[]?
       doc: |
         Define a list of environment variables which will be set in
         the execution environment of the tool.  See
