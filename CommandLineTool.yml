@@ -727,6 +727,7 @@ $graph:
 
     - name: networkAccess
       type: [boolean, Expression]
+      jsonldPredicate: "cwl:NetworkAccess/networkAccess"
       doc: |
         Indicate whether a process requires outgoing IPv4/IPv6 network
         access.  Choice of IPv4 or IPv6 is implementation and site
@@ -806,6 +807,7 @@ $graph:
         the execution environment of the tool.  See
         [EnvironmentDef](#EnvironmentDef) for details.
       jsonldPredicate:
+        "_id": "cwl:EnvVarRequirement/envDef"
         mapSubject: envName
         mapPredicate: envValue
 
@@ -1179,6 +1181,7 @@ $graph:
       type: EnvironmentDef[]
       doc: The list of environment variables.
       jsonldPredicate:
+        "_id": "cwl:EnvVarRequirement/envDef"
         mapSubject: envName
         mapPredicate: envValue
 
@@ -1425,6 +1428,7 @@ $graph:
         "_type": "@vocab"
     - name: networkAccess
       type: [boolean, Expression]
+      jsonldPredicate: "cwl:NetworkAccess/networkAccess"
 
 - name: InplaceUpdateRequirement
   type: record
