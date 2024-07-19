@@ -25,7 +25,8 @@ Options:
                         CLASSNAME
   --timeout=TIMEOUT     cwltest timeout in seconds.
   --verbose             Print the cwltest invocation and pass --verbose to
-                        cwltest
+                        cwltest (or if running the "--self" check, print the
+                        schema-salad-tool invocation)
   --self                Test CWL and test .cwl files themselves. If this flag
                         is given, any other flags will be ignored.
   --badgedir=DIRNAME    Specifies the directory to store JSON files for badges.
@@ -116,15 +117,13 @@ if [ -n "${SELF}" ]; then
     fi
     # This is how CWL should be written.
     DEFINITION=./CommonWorkflowLanguage.yml
-    # Let's test each files
-    find tests -type f -name "*.cwl" | \
-        while read -r target;
-        do
-            schema-salad-tool ${DEFINITION} "${target}" --quiet || {
-                echo "[INVALID] ${target}"
-                exit 1
-            }
-        done
+    QUIET=--quiet
+    if [ "$VERBOSE" = "--verbose" ]; then
+        QUIET=
+    fi
+    # Let's test all the files at once as that is faster
+    schema-salad-tool ${QUIET} ${DEFINITION} \
+        $(find tests -type f -name "*.cwl") || exit 1
     exit 0
 fi
 
@@ -162,7 +161,7 @@ runtest() {
 if [ "$PLATFORM" = "Linux" ]; then
     runtest "$(readlink -f "$runner")"
 elif [ "$PLATFORM" = "Darwin" ]; then
-    runtest $runner
+    runtest "$runner"
 else
     runtest "$(greadlink -f "$runner")"
 fi
