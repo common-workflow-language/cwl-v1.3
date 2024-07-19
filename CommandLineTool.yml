@@ -54,14 +54,14 @@ $graph:
       See also the [CWL Workflow Description, v1.3.0-dev1 changelog](Workflow.html#Changelog).
 
       * New field `networkAccess` on
-        [CommandLineTool](#CommandLineTool).  This supercedes the
+        [CommandLineTool](#CommandLineTool).  This supersedes the
         [NetworkAccess](#NetworkAccess) requirement, which is now
         deprecated.
       * New field `envDef` on [CommandLineTool](#CommandLineTool).
-        This supercedes the [EnvVarRequirement](#EnvVarRequirement)
+        This supersedes the [EnvVarRequirement](#EnvVarRequirement)
         requirement, which is now deprecated.
       * New field `initialWorkDir` on
-        [CommandLineTool](#CommandLineTool).  This supercedes the
+        [CommandLineTool](#CommandLineTool).  This supersedes the
         [InitialWorkDirRequirement](#InitialWorkDirRequirement)
         requirement, which is now deprecated.
 
