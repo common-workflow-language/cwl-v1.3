@@ -1,3 +1,4 @@
+abstractworkflowstep
 acyclic
 amstutz
 arrayschema
@@ -160,6 +161,9 @@ loadlistingrequirement
 localhost
 lookahead
 loopback
+loopinput
+loopoutputmethod
+loopworkflowstep
 maccallum
 macos
 mappredicate
@@ -194,6 +198,7 @@ outputbinding
 outputenumschema
 outputeval
 outputformat
+outputmethod
 outputschema
 outputsink
 outputsource
@@ -231,6 +236,7 @@ saladversion
 sbgenomics
 scatterfeaturerequirement
 scattermethod
+scatterworkflowstep
 schemadefrequirement
 schemaorg
 schemas
