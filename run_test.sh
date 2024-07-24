@@ -52,6 +52,7 @@ SELF=""
 BADGE=""
 TIMEOUT=""
 TAGS=""
+REPORT_URI="https://github.com/common-workflow-language/cwl-v1.3/tree/main/"
 
 while [ -n "$1" ]
 do
@@ -96,7 +97,7 @@ do
             SELF=1
             ;;
         --badgedir=*)
-            BADGE=$arg
+            BADGE="$arg --baseuri=$REPORT_URI"
             ;;
         --timeout=*)
             TIMEOUT=$arg
