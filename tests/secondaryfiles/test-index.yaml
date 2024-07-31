@@ -11,7 +11,7 @@
   tags: [ inline_javascript, secondary_files, command_line_tool, shell_command ]
 
 - tool: rename-outputs.cwl
-  doc: Confirm CommandOutputParameter expression can receive a File object
+  doc: Confirm CommandOutputParameter expression can receive a File object (using InitialWorkDirRequirement)
   id: command_output_file_expression
   output:
     output_file:
@@ -24,4 +24,20 @@
         checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
         location: secondary_file_test.txt.accessory
         size: 0
-  tags: [ inline_javascript, secondary_files, command_line_tool ]
+  tags: [ inline_javascript, secondary_files, command_line_tool, initial_work_dir]
+
+- tool: rename-outputs_noiwdr.cwl
+  doc: Confirm CommandOutputParameter expression can receive a File object (using initialWorkDir)
+  id: command_output_file_expression_noiwdr
+  output:
+    output_file:
+      class: File
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+      location: secondary_file_test.txt
+      secondaryFiles:
+      - class: File
+        checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+        location: secondary_file_test.txt.accessory
+        size: 0
+  tags: [ inline_javascript, secondary_files, command_line_tool, initial_work_dir ]
