@@ -458,6 +458,64 @@ $graph:
       jsonldPredicate:
         _id: "cwl:listing"
 
+- name: SecretText
+  type: record
+  doc: |
+    An input parameter value that is confidential.  This feature is
+    intended for values such as passwords, API tokens, or encryption
+    keys.
+
+    When a parameter reference refers to a SecretText object, it must
+    be replaced with the object's value of `plaintext`.
+  fields:
+    - name: class
+      type:
+        type: enum
+        name: SecretText_class
+        symbols:
+          - cwl:SecretText
+      jsonldPredicate:
+        _id: "@type"
+        _type: "@vocab"
+      doc: Indicates this object represents a secret.
+    - name: secretTextId
+      type: string?
+      doc: |
+        This is an identifier to be used to fetch a secret value from
+        the workflow platform secrets management service.  This assumes a
+        key-value model where the secret identifier is passed to the
+        secret store and a confidential string value (the password,
+        API token, encryption key, etc) is returned.
+
+        If `plaintext` is null and `secretTextId` is non-null, the
+        value of `plaintext` should be set by looking up the value of
+        `secretTextId` on the workflow platform's secrets management
+        service.
+
+        The format of the secret identifier, as well as protocol,
+        service endpoint, key management, access permissions, and
+        authentication for the secrets management service are
+        implementation specific and out of scope for this document.
+
+        The `secretTextId` field is optional.  If `secretTextId` is
+        not provided, `plaintext` must be non-null.
+
+        If the platform does not offer secrets management, or there is
+        a failure when retrieving the value of a secret, and
+        `plaintext` is null, it is a fatal error.
+
+    - name: plaintext
+      type: string?
+      doc: |
+        Contains the secret value.
+
+        Implementations should apply special handling to confidential
+        values to avoid displaying them in logs, including them in
+        output, or otherwise making them visible or accessible in any
+        way that has potential to leak beyond what is required to make
+        the value of the confidential input parameter available to
+        workflow processes that need it.
+
 
 - name: CWLObjectType
   type: union
@@ -470,6 +528,7 @@ $graph:
     - string
     - File
     - Directory
+    - SecretText
     - type: array
       items:
         - "null"
