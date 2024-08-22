@@ -33,4 +33,4 @@ jobs:
         run: cp conformance_tests.yaml conformance_tests.cwltest.yaml
 
       - name: Run tests against the reference runner
-        run: python -m pytest conformance_tests.cwltest.yaml -n auto -rs
+        run: python -m pytest conformance_tests.cwltest.yaml -n auto -rsfE
