@@ -3525,3 +3525,12 @@
       an_array_of_mixed_booleans: [ false, true, false ]
       an_array_of_trues: [ true, true, true ]
       an_int: 42
+
+- id: record_default_field
+  job: tests/empty:json
+  tool: tests/record-default-field.cwl
+  doc: handling default value in fields of a record object
+  tags: [ required, command_line_tool ]
+  output:
+    v1: f1
+    v2: f2
