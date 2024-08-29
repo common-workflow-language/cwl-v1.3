@@ -61,6 +61,23 @@ $graph:
       jsonldPredicate: "rdfs:label"
       doc: "A short, human-readable label of this object."
 
+- name: Defaultable
+  type: record
+  abstract: true
+  fields:
+    - name: default
+      type: CWLObjectType?
+      jsonldPredicate:
+        _id: "sld:default"
+        _container: "@list"
+        noLinkCheck: true
+      doc: |
+        The default value for this parameter.  When it occurs in a CommandLineTool,
+        it is used if the parameter is missing from the input object, or if the value
+        of the parameter in the input object is `null`.  When it occurs in a Workflow,
+        it is used if there is no `source` field, or the value produced by the `source`
+        is `null`.  Default values are applied before scattering or evaluating expressions
+        (e.g. dependent `valueFrom` fields).
 
 - name: Identified
   type: record
@@ -115,24 +132,6 @@ $graph:
           1. `loadListing` on an individual parameter
           2. Inherited from `LoadListingRequirement`
           3. By default: `no_listing`
-
-- name: Defaultable
-  type: record
-  abstract: true
-  fields:
-    - name: default
-      type: CWLObjectType?
-      jsonldPredicate:
-        _id: "sld:default"
-        _container: "@list"
-        noLinkCheck: true
-      doc: |
-        The default value for this parameter.  When it occurs in a CommandLineTool,
-        it is used if the parameter is missing from the input object, or if the value
-        of the parameter in the input object is `null`.  When it occurs in a Workflow,
-        it is used if there is no `source` field, or the value produced by the `source`
-        is `null`.  Default values are applied before scattering or evaluating expressions
-        (e.g. dependent `valueFrom` fields).
 
 - name: FieldBase
   type: record
