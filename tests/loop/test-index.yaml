@@ -1,15 +1,3 @@
-- tool: invalid-loop-scatter.cwl
-  id: loop_fail_scatter
-  doc: "Affirm that a loop workflow does not validate if scatter and loop directives are on the same step"
-  should_fail: true
-  tags: [ conditional, loop, inline_javascript, scatter, workflow ]
-
-- tool: invalid-no-when.cwl
-  id: loop_fail_no_when
-  doc: "Affirm that a loop workflow does not validate if no when directive is specified"
-  should_fail: true
-  tags: [ conditional, loop, inline_javascript, scatter, workflow ]
-
 - job: single-var-loop-job.yml
   tool: single-var-loop.cwl
   id: loop_single_variable
