@@ -33,7 +33,7 @@
 - job: single-var-loop-job.yml
   tool: all-output-loop.cwl
   id: loop_with_all_output_method
-  doc: "Test a loop case with outputMethod set to all"
+  doc: "Test a loop case with outputMethod set to all_iterations"
   output:
     o1: [2, 3, 4, 5, 6, 7, 8, 9, 10]
   tags: [ conditional, loop, inline_javascript, workflow ]
@@ -41,7 +41,7 @@
 - job: single-var-loop-job.yml
   tool: all-output-loop-no-iteration.cwl
   id: loop_with_all_output_method_no_iteration
-  doc: "Test a loop case with outputMethod set to all and a false condition"
+  doc: "Test a loop case with outputMethod set to all_iterations and a false condition"
   output:
     o1: []
   tags: [ conditional, loop, inline_javascript, workflow ]
@@ -80,7 +80,7 @@
 - job: two-vars-loop-job.yml
   tool: loop-inside-loop-all.cwl
   id: loop_nested_all
-  doc: "Test a workflow with two nested loops, both with outputMethod set to all"
+  doc: "Test a workflow with two nested loops, both with outputMethod set to all_iterations"
   output:
     o1: [[2], [2, 3], [2, 3, 4]]
   tags: [ conditional, loop, inline_javascript, scatter, workflow ]

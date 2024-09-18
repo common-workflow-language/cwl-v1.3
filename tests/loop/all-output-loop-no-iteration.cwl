@@ -14,7 +14,7 @@ steps:
     when: $(inputs.i1 < 1)
     loop:
       i1: o1
-    outputMethod: all
+    outputMethod: all_iterations
     run:
       class: ExpressionTool
       inputs:

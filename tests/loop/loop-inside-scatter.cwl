@@ -28,7 +28,7 @@ steps:
           when: $(inputs.i1 < 10)
           loop:
             i1: o1
-          outputMethod: last
+          outputMethod: last_iteration
           run:
             class: ExpressionTool
             inputs:

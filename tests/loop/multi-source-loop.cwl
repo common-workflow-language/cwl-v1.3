@@ -21,7 +21,7 @@ steps:
       i1:
         outputSource: [ osmall, obig ]
         pickValue: the_only_non_null
-    outputMethod: all
+    outputMethod: all_iterations
     run:
       class: Workflow
       inputs:

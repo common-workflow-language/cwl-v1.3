@@ -20,7 +20,7 @@ steps:
       i1:
         outputSource: [ osmall, obig ]
         valueFrom: $(self[0])
-    outputMethod: all
+    outputMethod: all_iterations
     run:
       class: Workflow
       inputs:

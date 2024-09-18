@@ -19,7 +19,7 @@ steps:
     loop:
       i2:
         valueFrom: $(inputs.i2 + 1)
-    outputMethod: all
+    outputMethod: all_iterations
     run:
       class: Workflow
       inputs:
@@ -34,7 +34,7 @@ steps:
           when: $(inputs.i1 <= inputs.i2)
           loop:
             i1: o1
-          outputMethod: last
+          outputMethod: last_iteration
           run:
             class: ExpressionTool
             inputs:
