@@ -1920,6 +1920,15 @@
   doc: Test optional integer workflow inputs (unspecified)
   tags: [ workflow, inline_javascript, expression_tool ]
 
+- tool: tests/optional-input-scatter.cwl
+  job: tests/scatter-job1.json
+  output:
+    out: ["foo one", "foo two", "foo three", "foo four"]
+  id: optional_input_scatter
+  doc: |
+    Test optional step input with single scatter parameter
+  tags: [ scatter, workflow ]
+
 - job: tests/io-int.json
   output: {"o": 10}
   tool: tests/io-int-default-wf.cwl
