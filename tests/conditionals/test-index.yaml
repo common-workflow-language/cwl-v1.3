@@ -20,7 +20,7 @@
   tags: [ conditional, inline_javascript, workflow ]
 
 - id: direct_required
-  doc: Conditional using intermediate WorkflowStep.in input
+  doc: Conditional using intermediate AbstractWorkflowStep.in input
   tool: cond-wf-002.cwl
   job: val.1.job.yaml
   output:
@@ -186,7 +186,7 @@
     out1: [
       "foo 2", "foo 4", "foo 6",
       "bar 1", "bar 3", "bar 5"]
-  tags: [ conditional, inline_javascript, scatter, multiple, workflow ]
+  tags: [ conditional, inline_javascript, scatter, multiple_input, workflow ]
 
 - id: direct_optional_null_result_nojs
   doc: simplest conditional pattern (true), no javascript
@@ -205,7 +205,7 @@
   tags: [ conditional, workflow ]
 
 - id: direct_required_nojs
-  doc: Conditional using intermediate WorkflowStep.in input; no javascript
+  doc: Conditional using intermediate AbstractWorkflowStep.in input; no javascript
   tool: cond-wf-002_nojs.cwl
   job: val.1.job.yaml
   output:
@@ -371,7 +371,7 @@
     out1: [
       "foo 2", "foo 4", "foo 6",
       "bar 1", "bar 3", "bar 5"]
-  tags: [ conditional, scatter, multiple, workflow ]
+  tags: [ conditional, scatter, multiple_input, workflow ]
 
 
 - id: cond-with-defaults-1
@@ -395,7 +395,7 @@
             "size": 34
         }
     ]
-  tags: [ conditional, scatter, multiple, workflow ]
+  tags: [ conditional, scatter, multiple_input, workflow ]
 
 - id: cond-with-defaults-2
   doc: "Default inputs, choose step to run based on what was provided, second case"
@@ -411,4 +411,4 @@
             "size": 12
         }
     ]
-  tags: [ conditional, scatter, multiple, workflow ]
+  tags: [ conditional, scatter, multiple_input, workflow ]

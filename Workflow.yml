@@ -40,6 +40,12 @@ $graph:
       CWL group.
 
       ## Changelog
+      
+      * Added a new Loop feature to support iterative workflows. From a technical perspective, this led to the
+        introduction of a `LoopWorkflowStep`[#LoopWorkflowStep] element to represent iterative subworkflows, a
+        `LoopInput`[#LoopInput] object to handle termination conditions, and a `LoopOutputMethod`[#LoopOutputMethod]
+        feature to manage loop output data history.
+      
       See also the [CWL Command Line Tool Description, v1.3.0-dev1 changelog](CommandLineTool.html#Changelog).
       For other changes since CWL v1.0, see the
       [CWL Workflow Description, v1.1 changelog](https://www.commonwl.org/v1.1/Workflow.html#Changelog)
@@ -275,7 +281,7 @@ $graph:
 - type: record
   name: WorkflowStepInput
   extends: [Identified, InputSink, LoadContents, Labeled]
-  docParent: "#WorkflowStep"
+  docParent: "#AbstractWorkflowStep"
   doc: |
     The input of a workflow step connects an upstream parameter (from the
     workflow inputs, or the outputs of other workflows steps) with the input
@@ -301,7 +307,7 @@ $graph:
     in the workflow or workflow step requirements.
 
     If the sink parameter is an array, or named in a [workflow
-    scatter](#WorkflowStep) operation, there may be multiple inbound
+    scatter](#ScatterWorkflowStep) operation, there may be multiple inbound
     data links listed in the `source` field.  The values from the
     input links are merged depending on the method specified in the
     `linkMerge` field.  If both `linkMerge` and `pickValue` are null
@@ -338,7 +344,7 @@ $graph:
       3. Before `scatter` or `valueFrom`.
 
     This is specifically intended to be useful in combination with
-    [conditional execution](#WorkflowStep), where several upstream
+    [conditional execution](#AbstractWorkflowStep), where several upstream
     steps may be connected to a single input (`source` is a list), and
     skipped steps produce null values.
 
@@ -430,7 +436,7 @@ $graph:
 
 - type: record
   name: WorkflowStepOutput
-  docParent: "#WorkflowStep"
+  docParent: "#AbstractWorkflowStep"
   extends: Identified
   doc: |
     Associate an output parameter of the underlying process with a workflow
@@ -443,19 +449,68 @@ $graph:
     to connect the output value to downstream parameters.
 
 
+- name: LoopInput
+  type: record
+  extends: [Identified, OutputSink]
+  fields:
+    - name: default
+      type: ["null", File, Directory, Any]
+      doc: |
+        The default value for this parameter to use if either there is no
+        `outputSource` field, or the value produced by the `source` is `null`. The
+        default must be applied prior to scattering or evaluating `valueFrom`.
+      jsonldPredicate:
+        _id: "sld:default"
+        _container: "@list"
+        noLinkCheck: true
+    - name: valueFrom
+      type:
+        - "null"
+        - string
+        - Expression
+      jsonldPredicate: "cwl:valueFrom"
+      doc: |
+        To use valueFrom, [StepInputExpressionRequirement](#StepInputExpressionRequirement) must
+        be specified in the workflow or workflow step requirements.
+
+        If `valueFrom` is a constant string value, use this as the value for
+        this input parameter.
+
+        If `valueFrom` is a parameter reference or expression, it must be
+        evaluated to yield the actual value to be assigned to the input field.
+
+        The `self` value in the parameter reference or expression must be
+        `null` if there is no `source` field, or the value of the
+        parameter(s) specified in the `source` field.
+
+        The value of `inputs` in the parameter reference or expression must be
+        the input object to the previous iteration of the workflow step (or the initial
+        inputs for the first iteration).
+
+
 - name: ScatterMethod
   type: enum
-  docParent: "#WorkflowStep"
-  doc: The scatter method, as described in [workflow step scatter](#WorkflowStep).
+  docParent: "#ScatterWorkflowStep"
+  doc: The scatter method, as described in [workflow step scatter](#ScatterWorkflowStep).
   symbols:
     - dotproduct
     - nested_crossproduct
     - flat_crossproduct
 
 
-- name: WorkflowStep
+- name: LoopOutputMethod
+  type: enum
+  docParent: "#LoopWorkflowStep"
+  doc: The loop output method, as described in [workflow step loop](#LoopWorkflowStep).
+  symbols:
+    - last_iteration
+    - all_iterations
+
+
+- name: AbstractWorkflowStep
   type: record
   extends: [Identified, Labeled, sld:Documented]
+  abstract: true
   docParent: "#Workflow"
   doc: |
     A workflow step is an executable element of a workflow.  It specifies the
@@ -463,59 +518,11 @@ $graph:
     `Workflow`) in the `run` field and connects the input and output parameters
     of the underlying process to workflow parameters.
 
-    # Scatter/gather
-
-    To use scatter/gather,
-    [ScatterFeatureRequirement](#ScatterFeatureRequirement) must be specified
-    in the workflow or workflow step requirements.
-
-    A "scatter" operation specifies that the associated workflow step or
-    subworkflow should execute separately over a list of input elements.  Each
-    job making up a scatter operation is independent and may be executed
-    concurrently.
-
-    The `scatter` field specifies one or more input parameters which will be
-    scattered.  An input parameter may be listed more than once.  The declared
-    type of each input parameter implicitly becomes an array of items of the
-    input parameter type.  If a parameter is listed more than once, it becomes
-    a nested array.  As a result, upstream parameters which are connected to
-    scattered parameters must be arrays.
-
-    All output parameter types are also implicitly wrapped in arrays.  Each job
-    in the scatter results in an entry in the output array.
-
-    If any scattered parameter runtime value is an empty array, all outputs are
-    set to empty arrays and no work is done for the step, according to
-    applicable scattering rules.
-
-    If `scatter` declares more than one input parameter, `scatterMethod`
-    describes how to decompose the input into a discrete set of jobs.
-
-      * **dotproduct** specifies that each of the input arrays are aligned and one
-          element taken from each array to construct each job.  It is an error
-          if all input arrays are not the same length.
-
-      * **nested_crossproduct** specifies the Cartesian product of the inputs,
-          producing a job for every combination of the scattered inputs.  The
-          output must be nested arrays for each level of scattering, in the
-          order that the input arrays are listed in the `scatter` field.
-
-      * **flat_crossproduct** specifies the Cartesian product of the inputs,
-          producing a job for every combination of the scattered inputs.  The
-          output arrays must be flattened to a single level, but otherwise listed in the
-          order that the input arrays are listed in the `scatter` field.
-
     # Conditional execution (Optional)
 
     Conditional execution makes execution of a step conditional on an
     expression.  A step that is not executed is "skipped".  A skipped
     step produces `null` for all output parameters.
-
-    The condition is evaluated after `scatter`, using the input object
-    of each individual scatter job.  This means over a set of scatter
-    jobs, some may be executed and some may be skipped.  When the
-    results are gathered, skipped steps must be `null` in the output
-    arrays.
 
     The `when` field controls conditional execution.  This is an
     expression that must be evaluated with `inputs` bound to the step
@@ -523,11 +530,11 @@ $graph:
     value.  It is an error if this expression returns a value other
     than `true` or `false`.
 
-    Conditionals in CWL are an optional feature and are not required
-    to be implemented by all consumers of CWL documents.  An
-    implementation that does not support conditionals must return a
-    fatal error when attempting to execute a workflow that uses
-    conditional constructs the implementation does not support.
+    Conditional execution in CWL is an optional feature and is not required
+    to be implemented by all consumers of CWL documents. An implementation that
+    does not support conditional executions must return a fatal error when
+    attempting to execute a workflow that uses conditional constructs the
+    implementation does not support.
 
     # Subworkflows
 
@@ -603,6 +610,68 @@ $graph:
         If defined, only run the step when the expression evaluates to
         `true`.  If `false` the step is skipped.  A skipped step
         produces a `null` on each output.
+
+
+- name: WorkflowStep
+  type: record
+  extends: AbstractWorkflowStep
+  docParent: "#Workflow"
+
+
+- name: ScatterWorkflowStep
+  type: record
+  extends: AbstractWorkflowStep
+  docParent: "#Workflow"
+  doc: |
+    To use scatter/gather,
+    [ScatterFeatureRequirement](#ScatterFeatureRequirement) must be specified
+    in the workflow or workflow step requirements.
+
+    A "scatter" operation specifies that the associated workflow step or
+    subworkflow should execute separately over a list of input elements.  Each
+    job making up a scatter operation is independent and may be executed
+    concurrently.
+
+    The `scatter` field specifies one or more input parameters which will be
+    scattered.  An input parameter may be listed more than once.  The declared
+    type of each input parameter implicitly becomes an array of items of the
+    input parameter type.  If a parameter is listed more than once, it becomes
+    a nested array.  As a result, upstream parameters which are connected to
+    scattered parameters must be arrays.
+
+    All output parameter types are also implicitly wrapped in arrays.  Each job
+    in the scatter results in an entry in the output array.
+
+    If any scattered parameter runtime value is an empty array, all outputs are
+    set to empty arrays and no work is done for the step, according to
+    applicable scattering rules.
+
+    If `scatter` declares more than one input parameter, `scatterMethod`
+    describes how to decompose the input into a discrete set of jobs.
+
+      * **dotproduct** specifies that each of the input arrays are aligned and one
+          element taken from each array to construct each job.  It is an error
+          if all input arrays are not the same length.
+
+      * **nested_crossproduct** specifies the Cartesian product of the inputs,
+          producing a job for every combination of the scattered inputs.  The
+          output must be nested arrays for each level of scattering, in the
+          order that the input arrays are listed in the `scatter` field.
+
+      * **flat_crossproduct** specifies the Cartesian product of the inputs,
+          producing a job for every combination of the scattered inputs.  The
+          output arrays must be flattened to a single level, but otherwise listed in the
+          order that the input arrays are listed in the `scatter` field.
+
+    # Conditional execution (Optional)
+
+    The condition is evaluated after `scatter`, using the input object
+    of each individual scatter job.  This means over a set of scatter
+    jobs, some may be executed and some may be skipped.  When the
+    results are gathered, skipped steps must be `null` in the output
+    arrays.
+
+  fields:
     - name: scatter
       type:
         - string?
@@ -619,6 +688,74 @@ $graph:
       jsonldPredicate:
         "_id": "cwl:scatterMethod"
         "_type": "@vocab"
+
+
+- name: LoopWorkflowStep
+  type: record
+  extends: AbstractWorkflowStep
+  docParent: "#Workflow"
+  doc: |
+    # Iterative execution (Optional)
+
+    The `loop` field controls iterative execution. It defines the input
+    parameters of the loop iterations after the first one (inputs of the
+    first iteration are the step input parameters, as usual). If no
+    `loop` rule is specified for a given step `in` field, the initial
+    value is kept constant among all iterations.
+
+    When a `loop` field is present, the `when` field is mandatory. It is
+    evaluated before each loop iteration and acts as a termination condition:
+    as soon as the `when` expression evaluates to `false`, the loop terminates
+    and the step outputs are propagated to the subsequent workflow steps.
+
+    The `outputMethod` field describes how to deal with loop outputs after
+    termination:
+
+      * **last_iteration** specifies that only the last computed element for
+        each output parameter should be propagated to the subsequent steps.
+        This is the default value.
+
+      * **all_iterations** specifies that an array with all output values
+        computed at the end of each loop iteration should be propagated to
+        the subsequent steps. Elements in the array must be ordered according
+        to the loop iterations that produced them.
+
+    Iterative execution in CWL is an optional feature and is not required
+    to be implemented by all consumers of CWL documents. An implementation that
+    does not support iterative executions must return a fatal error when
+    attempting to execute a workflow that uses iterative constructs the
+    implementation does not support.
+
+  fields:
+    - name: loop
+      doc: |
+        Defines the input parameters of the loop iterations after the first one
+        (inputs of the first iteration are the step input parameters). If no
+        `loop` rule is specified for a given step `in` field, the initial value
+        is kept constant among all iterations.
+      type: LoopInput[]?
+      jsonldPredicate:
+        _id: "cwl:loop"
+        mapSubject: id
+        mapPredicate: outputSource
+    - name: outputMethod
+      doc: |
+        If not specified, the default method is "last_iteration".
+      type: LoopOutputMethod?
+      default: last_iteration
+      jsonldPredicate:
+        "_id": "cwl:outputMethod"
+        "_type": "@vocab"
+    - name: when
+      type:
+        - Expression
+      jsonldPredicate: "cwl:when"
+      doc: |
+        Only run the next iteration when the expression evaluates to `true`.
+        If the first iteration evaluates to `false` the step is skipped.
+        A skipped step produces a `null` on each output if the `outputMethod`
+        is set to `last_iteration`, and an empty array if the `outputMethod`
+        is set to `all_iterations`.
 
 
 - name: Workflow
@@ -701,7 +838,7 @@ $graph:
         concurrently, provided that dependencies between steps are met.
       type:
         - type: array
-          items: "#WorkflowStep"
+          items: AbstractWorkflowStep
       jsonldPredicate:
           mapSubject: id
 
@@ -711,7 +848,7 @@ $graph:
   extends: ProcessRequirement
   doc: |
     Indicates that the workflow platform must support nested workflows in
-    the `run` field of [WorkflowStep](#WorkflowStep).
+    the `run` field of [AbstractWorkflowStep](#AbstractWorkflowStep).
   fields:
     - name: "class"
       type:
@@ -729,7 +866,7 @@ $graph:
   extends: ProcessRequirement
   doc: |
     Indicates that the workflow platform must support the `scatter` and
-    `scatterMethod` fields of [WorkflowStep](#WorkflowStep).
+    `scatterMethod` fields of [ScatterWorkflowStep](#ScatterWorkflowStep).
   fields:
     - name: "class"
       type:
