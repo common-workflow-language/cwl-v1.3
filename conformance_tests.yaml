@@ -3402,6 +3402,37 @@
   }
   tags: [ required, command_line_tool ]
 
+- id: glob_list
+  tool: tests/glob-list.cwl
+  job: tests/dir-job1.yml
+  doc: Test the glob can be a list
+  output: {
+    "result": [
+      {
+        "basename": "a.txt",
+        "checksum": "sha1$2ef7bde608ce5404e97d5f042f95f89f1c232871",
+        "class": "File",
+        "location": Any,
+        "size": 12
+      },
+      {
+        "basename": "c.txt",
+        "checksum": "sha1$64d7a4802661604891785536e490635a8406f103",
+        "class": "File",
+        "location": Any,
+        "size": 36
+      }, 
+      {
+        "basename": "b.csv",
+        "checksum": "sha1$34bd0059091490789ffcd3fe421df8d4e5388b76",
+        "class": "File",
+        "location": Any,
+        "size": 7
+      }
+    ]
+  }
+  tags: [ required, command_line_tool ]
+
 - id: capture_files
   tool: tests/capture-files.cwl
   job: tests/dir-job.yml
