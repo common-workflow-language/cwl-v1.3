@@ -1900,21 +1900,21 @@
   tags: [ workflow, shell_command ]
 
 - job: tests/io-int.json
-  output: {"o": 10}
+  output: {"o": 250}
   tool: tests/io-int-wf.cwl
   id: workflow_integer_input
   doc: Test integer workflow input and outputs
   tags: [ workflow, inline_javascript, expression_tool ]
 
 - job: tests/io-int.json
-  output: {"o": 10}
+  output: {"o": 250}
   tool: tests/io-int-optional-wf.cwl
   id: workflow_integer_input_optional_specified
   doc: Test optional integer workflow inputs (specified)
   tags: [ workflow, inline_javascript, expression_tool ]
 
 - job: tests/empty.json
-  output: {"o": 4}
+  output: {"o": 16}
   tool: tests/io-int-optional-wf.cwl
   id: workflow_integer_input_optional_unspecified
   doc: Test optional integer workflow inputs (unspecified)
@@ -1930,14 +1930,14 @@
   tags: [ scatter, workflow ]
 
 - job: tests/io-int.json
-  output: {"o": 10}
+  output: {"o": 250}
   tool: tests/io-int-default-wf.cwl
   id: workflow_integer_input_default_specified
   doc: Test default integer workflow inputs (specified)
   tags: [ workflow, inline_javascript, expression_tool ]
 
 - job: tests/empty.json
-  output: {"o": 8}
+  output: {"o": 128}
   tool: tests/io-int-default-wf.cwl
   id: workflow_integer_input_default_unspecified
   doc: Test default integer workflow inputs (unspecified)
