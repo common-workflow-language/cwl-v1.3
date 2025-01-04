@@ -8,7 +8,17 @@ requirements:
 inputs:
   i:
     type: int
-
+  i1: 
+    type: int[]
+  i2:
+    type: 
+      type: record
+      fields:
+        a:
+          type: int
+        b: 
+          type: float
+    
 outputs:
   o:
     type: int
@@ -18,14 +28,26 @@ steps:
   step1:
     in:
       i: i
+      i1: i1
+      i2: i2
     out: [o]
     run:
       class: ExpressionTool
       inputs:
         i:
           type: int
+        i1:
+          type: int[]
+        i2:
+          type: 
+            type: record
+            fields:
+              a:
+                type: int
+              b: 
+                type: float
       outputs:
         o:
           type: int
       expression: >
-        ${return {'o': inputs.i * 2};}
+        ${return {'o': inputs.i * ((inputs.i1.length > 0) ? inputs.i1[0] : 2) * inputs.i2.a * 2};}
