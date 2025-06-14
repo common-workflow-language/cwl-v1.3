@@ -24,7 +24,7 @@ jobs:
           python-version: '3.9.x'
 
       - name: Setup prerequirements
-        run: pip install "cwltest>=2.3" pytest-xdist "git+https://github.com/common-workflow-language/cwltool.git@main#egg=cwltool"
+        run: pip install "cwltest>=2.3" pytest-xdist "cwltool>=3.1.20240909164951"
 
       - name: Copy in cwltool-specific configuration for the cwltest pytest plugin
         run: cp "$(python -c 'from cwltool.tests.util import get_data; print(get_data("tests/cwl-conformance/cwltool-conftest.py"))')" conftest.py
@@ -33,4 +33,4 @@ jobs:
         run: cp conformance_tests.yaml conformance_tests.cwltest.yaml
 
       - name: Run tests against the reference runner
-        run: python -m pytest conformance_tests.cwltest.yaml -n auto -rs
+        run: python -m pytest conformance_tests.cwltest.yaml -n auto -rsfE

@@ -1920,6 +1920,15 @@
   doc: Test optional integer workflow inputs (unspecified)
   tags: [ workflow, inline_javascript, expression_tool ]
 
+- tool: tests/optional-input-scatter.cwl
+  job: tests/scatter-job1.json
+  output:
+    out: ["foo one", "foo two", "foo three", "foo four"]
+  id: optional_input_scatter
+  doc: |
+    Test optional step input with single scatter parameter
+  tags: [ scatter, workflow ]
+
 - job: tests/io-int.json
   output: {"o": 10}
   tool: tests/io-int-default-wf.cwl
@@ -3393,6 +3402,37 @@
   }
   tags: [ required, command_line_tool ]
 
+- id: glob_list
+  tool: tests/glob-list.cwl
+  job: tests/dir-job1.yml
+  doc: Test the glob can be a list
+  output: {
+    "result": [
+      {
+        "basename": "a.txt",
+        "checksum": "sha1$2ef7bde608ce5404e97d5f042f95f89f1c232871",
+        "class": "File",
+        "location": Any,
+        "size": 12
+      },
+      {
+        "basename": "c.txt",
+        "checksum": "sha1$64d7a4802661604891785536e490635a8406f103",
+        "class": "File",
+        "location": Any,
+        "size": 36
+      }, 
+      {
+        "basename": "b.csv",
+        "checksum": "sha1$34bd0059091490789ffcd3fe421df8d4e5388b76",
+        "class": "File",
+        "location": Any,
+        "size": 7
+      }
+    ]
+  }
+  tags: [ required, command_line_tool ]
+
 - id: capture_files
   tool: tests/capture-files.cwl
   job: tests/dir-job.yml
@@ -3531,3 +3571,5 @@
   doc: Test that the output objects returned by an ExpressionTool process are validated against the outputs schema.
   should_fail: true
   tags: [ inline_javascript, expression_tool ]
+
+- $import: tests/loop/test-index.yaml
