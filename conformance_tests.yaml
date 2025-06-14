@@ -1801,6 +1801,14 @@
   doc: Test workflow scatter with single scatter parameter and two valueFrom using $inputs (first and current el)
   tags: [ scatter, step_input, workflow ]
 
+- job: tests/bwa-mem-job.json
+  output:
+    out1: [ "foo 1", "foo 2", "foo 3", "foo 4"]
+  tool: tests/scatter-valuefrom-default.cwl
+  id: wf_scatter_valuefrom_default
+  doc: Test workflow scatter with single scatter parameter, a valueFrom in the WorkflowStep and a default value inside the step
+  tags: [ scatter, step_input, workflow ]
+
 - job: tests/import_schema-def_job.yml
   output:
     output_bam:
