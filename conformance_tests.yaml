@@ -3566,4 +3566,10 @@
       an_array_of_trues: [ true, true, true ]
       an_int: 42
 
+- id: invalid_expression_tool_output
+  tool: tests/null-expression4-tool.cwl
+  doc: Test that the output objects returned by an ExpressionTool process are validated against the outputs schema.
+  should_fail: true
+  tags: [ inline_javascript, expression_tool ]
+
 - $import: tests/loop/test-index.yaml
