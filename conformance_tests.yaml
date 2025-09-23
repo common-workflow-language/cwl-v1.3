@@ -1801,6 +1801,30 @@
   doc: Test workflow scatter with single scatter parameter and two valueFrom using $inputs (first and current el)
   tags: [ scatter, step_input, workflow ]
 
+- job: tests/empty.json
+  output: {"result": [
+    {
+      "class": "File",
+      "checksum": "sha1$4bb9bb2748a4380f12c039a9c2268115b816a6de",
+    },
+    {
+      "class": "File",
+      "checksum": "sha1$cf42ecac010c90a72257a573a5ce7efb7d6f0e08",
+    }
+  ]}
+  tool: tests/scatter-defaults.cwl
+  id: scatter_all_input_defaults
+  doc: Test workflow scatter with single scatter parameter and two default inputs
+  tags: [ scatter, workflow ]
+
+- job: tests/bwa-mem-job.json
+  output:
+    out1: [ "foo 1", "foo 2", "foo 3", "foo 4"]
+  tool: tests/scatter-valuefrom-default.cwl
+  id: wf_scatter_valuefrom_default
+  doc: Test workflow scatter with single scatter parameter, a valueFrom in the WorkflowStep and a default value inside the step
+  tags: [ scatter, step_input, workflow ]
+
 - job: tests/import_schema-def_job.yml
   output:
     output_bam:

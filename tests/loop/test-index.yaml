@@ -107,3 +107,12 @@
     o1: [8, 11, 14, 17, 20]
   doc: "Test a loop whose source has a default value"
   tags: [ conditional, loop, inline_javascript, scatter, workflow ]
+
+- job: single-var-loop-job.yml
+  tool: default-stepinput-loop.cwl
+  id: loop_default_stepinput
+  output:
+    o1: [8, 13, 18]
+  doc: "Test a loop whose source has a default value updated by a valueFrom directive"
+  tags: [ conditional, loop, inline_javascript, scatter, workflow ]
+
