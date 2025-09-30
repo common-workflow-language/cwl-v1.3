@@ -351,7 +351,7 @@
       {
         "basename": "population.txt",
         "class": "File",
-        "checksum": "sha1$65bcac1846d6c1eb9c61caaa802847715eecea3a",
+        "checksum": "sha1$7110eda4d09e062aa5e4a390b0a572ac0d2c0220",
       }
     ]
   doc: "Test creation of literal secondary files"
@@ -387,7 +387,7 @@
       {
         "basename": "population.txt",
         "class": "File",
-        "checksum": "sha1$65bcac1846d6c1eb9c61caaa802847715eecea3a",
+        "checksum": "sha1$7110eda4d09e062aa5e4a390b0a572ac0d2c0220",
       }
     ]
   doc: "Test creation of literal files in the listing"

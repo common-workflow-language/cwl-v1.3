@@ -16,8 +16,8 @@ outputs:
       glob: "./*"
 baseCommand: ["true"]
 requirements:
+  InlineJavascriptRequirement: {}
   InitialWorkDirRequirement:
     listing:
       - entry: $(inputs.file_def)
-      - entry: "{'class': 'File', 'contents': '1234'"
-        entryname: population.txt
+      - entry: "${ return {'class': 'File', 'basename': 'population.txt', 'contents': '1234'} }"
