@@ -7,5 +7,16 @@ outputs:
   lit: File
 expression: |
   ${
-  return {"lit": {"class": "File", "basename": "a_file", "contents": "Hello file literal."}};
+  return {
+    "lit": {
+        "class": "File", 
+        "basename": "a_file", 
+        "contents": "Hello file literal a.", 
+        "secondaryFiles": [{
+          "class": "File", 
+          "basename": "b_file", 
+          "contents": "Hello file literal b.", }
+        ]
+      }
+    };
   }
