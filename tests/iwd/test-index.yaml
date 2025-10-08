@@ -318,3 +318,77 @@
         ]
     }
   tags: [ initial_work_dir, command_line_tool, workflow ]
+
+- job: literal-file-err.yml
+  id: iwd-check-literal-file
+  tool: iwd-additional-files.cwl
+  should_fail: true
+  doc: "Test validation of well-defined literal file with secondary files"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: literal-dir-err.yml
+  id: iwd-check-literal-dir
+  tool: iwd-additional-files.cwl
+  should_fail: true
+  doc: "Test validation of well-defined literal directory"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: literal-files.yml
+  id: iwd-literal-files-and-secondary-files
+  tool: iwd-additional-files.cwl
+  output:
+    head: [
+      {
+        "basename": "myfile.txt",
+        "class": "File",
+        "checksum": "sha1$05657030a00b6e726daa8b0771ee980d677fcb4e"
+      },
+      {
+        "basename": "myfile1.txt",
+        "class": "File",
+        "checksum": "sha1$8562a5beb76341c40a0ee21d950b1b6bd1990c75",
+      },
+      {
+        "basename": "population.txt",
+        "class": "File",
+        "checksum": "sha1$7110eda4d09e062aa5e4a390b0a572ac0d2c0220",
+      }
+    ]
+  doc: "Test creation of literal secondary files"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: literal-dir.yml
+  id: iwd-literal-dir
+  tool: iwd-additional-files.cwl
+  output:
+    head: [
+      {
+        "basename": "mydir",
+        "class": "Directory",
+        "listing": [
+            {
+                "class": "File",
+                "basename": "myfile",
+                "checksum": "sha1$ff55435345834a3fe224936776c2aa15f6ed5358",
+            },
+            {
+                "class": "Directory",
+                "basename": "mydir1",
+                "listing": [
+                  {
+                    "class": "File",
+                    "basename": "myfile1",
+                    "checksum": "sha1$3637a3705cd3e63efb504dd7e66b7c7c1cf493a4",
+                  }
+                ],
+            }
+        ],
+      },
+      {
+        "basename": "population.txt",
+        "class": "File",
+        "checksum": "sha1$7110eda4d09e062aa5e4a390b0a572ac0d2c0220",
+      }
+    ]
+  doc: "Test creation of literal files in the listing"
+  tags: [ initial_work_dir, command_line_tool ]

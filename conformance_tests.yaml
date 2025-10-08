@@ -1358,6 +1358,27 @@
 
 - job: tests/empty.json
   output:
+    "lit": {
+      "location": "a_file",
+      "class": "File",
+      "checksum": "sha1$a49c4cc1531107fe689606f89c9391db4f8efe15",
+      "size": 21,
+      "secondaryFiles": [
+        {
+          "class": "File",
+          "location": "b_file",
+          "checksum": "sha1$5ff34169047fdff65569f0624c6395799e213826",
+          "size": 21
+        }
+      ]
+    }
+  tool: tests/file-literal-ex1.cwl
+  id: exprtool_literal_secondary_file
+  doc: Test file literal with a secondary file output created by ExpressionTool
+  tags: [ inline_javascript, expression_tool ]
+
+- job: tests/empty.json
+  output:
     "thing": {
         "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
         "location": "thing",

@@ -1,0 +1,8 @@
+file_def:
+  class: File
+  contents: iwd-main-file
+  basename: myfile.txt
+  secondaryFiles: 
+    - class: File
+      basename: myfile1.txt
+      contents: iwd-secondary-file

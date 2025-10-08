@@ -1,0 +1,9 @@
+file_def: 
+  class: Directory
+  basename: mydir
+  listing:
+    - class: File 
+      basename: myfile
+      contents: placeholder
+    - class: Directory
+      basename: mydir1
