@@ -19,9 +19,13 @@ from ruamel.yaml import YAML
 from ruamel.yaml.scanner import ScannerError
 
 # https://raw.githubusercontent.com/common-workflow-language/cwl-v1.2/1.2.1_proposed/conformance_tests.yaml
-CONFORMANCE_TESTS_FILE = os.path.join(os.path.dirname(__file__), "../../conformance_tests.yaml")
+CONFORMANCE_TESTS_FILE = os.path.join(
+    os.path.dirname(__file__), "../../conformance_tests.yaml"
+)
 # https://raw.githubusercontent.com/common-workflow-language/cwl-v1.2/1.2.1_proposed/json-schema/cwl.yaml
-CWL_JSON_SCHEMA_FILE = os.path.join(os.path.dirname(__file__), "../../json-schema/cwl.yaml")
+CWL_JSON_SCHEMA_FILE = os.path.join(
+    os.path.dirname(__file__), "../../json-schema/cwl.yaml"
+)
 CWL_JSON_SCHEMA_REF = f"{CWL_JSON_SCHEMA_FILE}#/$defs/CWL"
 
 LOGGER = logging.getLogger(__name__)
@@ -35,22 +39,30 @@ AnyValueType = Optional[ValueType]
 _JSON: TypeAlias = "JSON"
 _JsonObjectItemAlias: TypeAlias = "_JsonObjectItem"
 _JsonListItemAlias: TypeAlias = "_JsonListItem"
-_JsonObjectItem = Dict[str, Union[AnyValueType, _JSON, _JsonObjectItemAlias, _JsonListItemAlias]]
+_JsonObjectItem = Dict[
+    str, Union[AnyValueType, _JSON, _JsonObjectItemAlias, _JsonListItemAlias]
+]
 _JsonListItem = List[Union[AnyValueType, _JSON, _JsonObjectItem, _JsonListItemAlias]]
 _JsonItem = Union[AnyValueType, _JSON, _JsonObjectItem, _JsonListItem]
-JSON = Union[Dict[str, Union[_JSON, _JsonItem]], List[Union[_JSON, _JsonItem]], AnyValueType]
+JSON = Union[
+    Dict[str, Union[_JSON, _JsonItem]], List[Union[_JSON, _JsonItem]], AnyValueType
+]
 
 ConformanceTestDef = TypedDict(
     "ConformanceTestDef",
     {
         "id": str,
         "doc": str,
-        "tags": List[str],  # should contain 'json_schema_invalid' to XFAIL schema validation tests
+        "tags": List[
+            str
+        ],  # should contain 'json_schema_invalid' to XFAIL schema validation tests
         "tool": str,
         "job": NotRequired[str],  # not used, for running the actual CWL
         "output": JSON,  # not used, output of CWL execution
-        "should_fail": NotRequired[bool],  # indicates failure as "execute failing", but potentially still valid CWL
-    }
+        "should_fail": NotRequired[
+            bool
+        ],  # indicates failure as "execute failing", but potentially still valid CWL
+    },
 )
 
 
@@ -76,7 +88,7 @@ def load_file(file_path: str, text: bool = False) -> Union[JSON, str]:
     :returns: loaded contents either parsed and converted to Python objects or as plain text.
     :raises ValueError: if YAML or JSON cannot be parsed or loaded from location.
     """
-    yaml = YAML(typ='safe', pure=True)
+    yaml = YAML(typ="safe", pure=True)
     try:
         if is_remote_file(file_path):
             headers = {"Accept": "text/plain"}
@@ -131,10 +143,11 @@ def load_conformance_tests(test_file: str) -> List[ConformanceTestDef]:
 
 
 @pytest.mark.parametrize(
-    "conformance_test",
-    load_conformance_tests(CONFORMANCE_TESTS_FILE)
+    "conformance_test", load_conformance_tests(CONFORMANCE_TESTS_FILE)
 )
-def test_conformance(conformance_test: ConformanceTestDef, request: pytest.FixtureRequest) -> None:
+def test_conformance(
+    conformance_test: ConformanceTestDef, request: pytest.FixtureRequest
+) -> None:
     LOGGER.debug(
         "Testing [%s] (%s) with [%s]",
         conformance_test["id"],
@@ -149,11 +162,17 @@ def test_conformance(conformance_test: ConformanceTestDef, request: pytest.Fixtu
     instance_file = conformance_test["tool"].rsplit("#")[0]
     instance = load_file(instance_file)
     instance_xfail = "json_schema_invalid" in conformance_test.get("tags", [])
-    request.applymarker(pytest.mark.xfail(reason="Test tagged with 'json_schema_invalid'.", condition=instance_xfail))
+    request.applymarker(
+        pytest.mark.xfail(
+            reason="Test tagged with 'json_schema_invalid'.", condition=instance_xfail
+        )
+    )
 
     schema_uri, schema_base, schema_test = resolve_ref(CWL_JSON_SCHEMA_REF)
     validator: Type[Validator] = jsonschema.validators.validator_for(schema_base)
-    validator.resolver = jsonschema.RefResolver(base_uri=schema_uri, referrer=schema_base)
+    validator.resolver = jsonschema.RefResolver(
+        base_uri=schema_uri, referrer=schema_base
+    )
 
     try:
         # similar to 'validate()' call that raises directly, but obtain the error for more context
@@ -164,15 +183,21 @@ def test_conformance(conformance_test: ConformanceTestDef, request: pytest.Fixtu
             if len(errors) == 1 and "oneOf" in errors[0].schema:
                 error = errors[0]
                 error.message += "\n\nFor each case under oneOf:\n" + "\n".join(
-                    f"- {err.message}"
-                    if not err.message.endswith("is not valid under any of the given schemas")
-                    else f"- all invalid under oneOf {err.validator_value}"
+                    (
+                        f"- {err.message}"
+                        if not err.message.endswith(
+                            "is not valid under any of the given schemas"
+                        )
+                        else f"- all invalid under oneOf {err.validator_value}"
+                    )
                     for err in error.context
                 )
                 raise error
             main_error = cast(
                 ValidationError,
-                best_match(errors),  # what 'validate()' normally does using 'iter_errors()'
+                best_match(
+                    errors
+                ),  # what 'validate()' normally does using 'iter_errors()'
             )
             raise main_error
     except Exception as exc:

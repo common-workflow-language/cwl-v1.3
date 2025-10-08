@@ -5,33 +5,42 @@
 
 import sys
 import os
+from pathlib import Path
 
 words = {}
-
 mainfile = sys.argv[1]
 indexfile = sys.argv[1] + ".idx1"
-
-main = open(mainfile)
-index = open(indexfile, "w")
-
 linenum = 0
-for l in main:
-    linenum += 1
-    l = l.rstrip().lower().replace(".", "").replace(",", "").replace(";", "").replace("-", " ")
-    for w in l.split(" "):
-        if w:
-            if w not in words:
-                words[w] = set()
-            words[w].add(linenum)
 
-for w in sorted(words.keys()):
-    index.write("%s: %s" % (w, ", ".join((str(i) for i in words[w]))) + "\n")
+with open(mainfile) as main:
+    for line in main:
+        linenum += 1
+        line = (
+            line.rstrip()
+            .lower()
+            .replace(".", "")
+            .replace(",", "")
+            .replace(";", "")
+            .replace("-", " ")
+        )
+        for word in line.split(" "):
+            if word:
+                if word not in words:
+                    words[word] = set()
+                words[word].add(linenum)
 
-open(os.path.splitext(sys.argv[1])[0] + ".idx2", "w")
-open(sys.argv[1] + ".idx3", "w")
-open(sys.argv[1] + ".idx4", "w")
-open(sys.argv[1] + ".idx5", "w")
-open(os.path.splitext(sys.argv[1])[0] + ".idx6" + os.path.splitext(sys.argv[1])[1], "w")
-open(sys.argv[1] + ".idx7", "w")
-os.mkdir(sys.argv[1] + "_idx8")
-open(sys.argv[1] + "_idx8/index", "w")
+with open(indexfile, "w") as index:
+    for w in sorted(words.keys()):
+        index.write("%s: %s" % (w, ", ".join((str(i) for i in words[w]))) + "\n")
+
+Path(os.path.splitext(sys.argv[1])[0] + ".idx2").touch(exist_ok=False)
+Path(sys.argv[1] + ".idx3").touch(exist_ok=False)
+Path(sys.argv[1] + ".idx4").touch(exist_ok=False)
+Path(sys.argv[1] + ".idx5").touch(exist_ok=False)
+Path(
+    os.path.splitext(sys.argv[1])[0] + ".idx6" + os.path.splitext(sys.argv[1])[1]
+).touch(exist_ok=False)
+Path(sys.argv[1] + ".idx7").touch(exist_ok=False)
+subdir = Path(sys.argv[1] + "_idx8")
+subdir.mkdir(exist_ok=False)
+(subdir / "index").touch(exist_ok=False)
