@@ -909,6 +909,13 @@
   doc: Test valueFrom on workflow step referencing other inputs
   tags: [ step_input, inline_javascript, workflow ]
 
+- job: tests/step-valuefrom-job.json
+  output: {val: "a_1.b_2\n"}
+  tool: tests/step-valuefrom6-wf.cwl
+  id: valuefrom_wf_step_concat
+  doc: Test valueFrom on workflow step by concatenating different inputs.
+  tags: [ step_input, inline_javascript, workflow ]
+
 - job: tests/record-output-job.json
   output:
     "orec": {
