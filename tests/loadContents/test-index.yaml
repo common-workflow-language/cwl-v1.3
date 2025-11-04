@@ -12,3 +12,18 @@
   doc: "Test that loadContents on a file larger than 64k fails"
   should_fail: true
   tags: [ command_line_tool, required, json_schema_invalid ]
+
+- job: gen-file.json
+  output: {
+    "model": {
+        "basename": "my_model",
+        "checksum": "sha1$39869fb44914a7aa172a48342d39dbdfbda4d65c",
+        "class": "File",
+        "size": 66560
+    },
+    "out_count": 11
+  }
+  tool: gen-file.cwl
+  id: outfile_loadContents
+  doc: Test outputBinding.loadContents is applied only to the file defined in the glob, not to the retrieved file
+  tags: [ command_line_tool, step_output ]
