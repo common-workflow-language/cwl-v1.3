@@ -3618,4 +3618,28 @@
       an_array_of_trues: [ true, true, true ]
       an_int: 42
 
+- id: cwl_output_json_new_output
+  tool: tests/test-cwl-out5.cwl
+  job: tests/empty.json
+  doc: >-
+    Confirm that undeclared outputs from cwl.output.json are discarded
+  tags: [ required, command_line_tool ]
+  output: {}
+
+- id: cwl_output_json_wrong_type
+  tool: tests/test-cwl-out6.cwl
+  job: tests/empty.json
+  doc: Confirm that outputs from cwl.output.json are type-checked
+  tags: [ required, command_line_tool ]
+  should_fail: true
+
+- id: cwl_output_json_missing_required_output
+  tool: tests/test-cwl-out7.cwl
+  job: tests/empty.json
+  doc: >-
+    Confirm that non-optional outputs not present in cwl.output.json
+    are still checked
+  tags: [ required, command_line_tool ]
+  should_fail: true
+
 - $import: tests/loop/test-index.yaml
