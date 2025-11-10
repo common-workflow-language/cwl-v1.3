@@ -21,10 +21,10 @@ jobs:
 
       - uses: actions/setup-python@v6
         with:
-          python-version: '3.9.x'
+          python-version: '3.10.x'
 
       - name: Setup prerequirements
-        run: pip install "cwltest>=2.3" pytest-xdist "cwltool>=3.1.20240909164951"
+        run: pip install "cwltest>=2.3" pytest-xdist git+https://github.com/common-workflow-language/cwltool.git@refs/pull/2177/head
 
       - name: Copy in cwltool-specific configuration for the cwltest pytest plugin
         run: cp "$(python -c 'from cwltool.tests.util import get_data; print(get_data("tests/cwl-conformance/cwltool-conftest.py"))')" conftest.py
