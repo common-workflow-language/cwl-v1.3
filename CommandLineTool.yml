@@ -51,6 +51,11 @@ $graph:
 
       ## Changelog for v1.3.0-dev1
 
+      * If an output name is present in the "cwl.output.json" file, but has
+        not been declared in the `outputs` section, it must be ignored and
+        not propagated to the next steps. Previous versions of CWL exhibited
+        undefined behaviour for this occurrence.
+
       See also the [CWL Workflow Description, v1.3.0-dev1 changelog](Workflow.html#Changelog).
       For other changes since CWL v1.0, see the
       [CWL Command Line Tool Description, v1.1 changelog](https://www.commonwl.org/v1.1/CommandLineTool.html#Changelog)

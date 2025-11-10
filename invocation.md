@@ -159,7 +159,10 @@ The exit code of the process is available to expressions in
 If the output directory contains a file named "cwl.output.json", that
 file must be loaded and used as the output object.  In this case, the
 output object should still be type-checked against the `outputs`
-section, but `outputBinding` is ignored.
+section, but `outputBinding` is ignored. If an output name is present
+in the "cwl.output.json" file, but has not been declared in the
+`outputs` section, it must be ignored and not propagated to the next
+steps.
 
 For Files and Directories, if the value of `path` is a relative path
 pattern (does not begin with a slash '/') then it is resolved relative
