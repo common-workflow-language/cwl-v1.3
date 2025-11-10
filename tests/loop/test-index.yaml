@@ -116,3 +116,10 @@
   doc: "Test a loop whose source has a default value updated by a valueFrom directive"
   tags: [ conditional, loop, inline_javascript, scatter, workflow ]
 
+- job: single-var-loop-job.yml
+  tool: opt-var-loop.cwl
+  id: loop_opt_var
+  output:
+    o1: 10
+  doc: "Test a loop case with two variables but one is optional"
+  tags: [ loop, inline_javascript, workflow ]
