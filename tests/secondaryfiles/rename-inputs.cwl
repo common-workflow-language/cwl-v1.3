@@ -43,12 +43,10 @@ inputs:
 
 
 arguments:
-- "ls"
-- $(inputs.inputWithSecondary.dirname)
-- valueFrom: "|"
-  shellQuote: false
-- "grep"
-- "secondary"
+ - sh
+ - -c
+ - |
+   ls $(inputs.inputWithSecondary.dirname) | grep secondary
 
 outputs:
 - id: output_file
@@ -56,4 +54,3 @@ outputs:
 stdout: result
 requirements:
   InlineJavascriptRequirement: {}
-  ShellCommandRequirement: {}

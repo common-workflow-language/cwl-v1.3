@@ -6,7 +6,6 @@ requirements:
   - class: DockerRequirement
     dockerPull: docker.io/debian:stable-slim
   - class: InlineJavascriptRequirement
-  - class: ShellCommandRequirement
 
 class: CommandLineTool
 
@@ -37,14 +36,15 @@ outputs:
       - pattern: "${ return null }"
 
 arguments:
-  - valueFrom: ${
+  - sh
+  - -c
+  - |
+    ${
         var fai_list = "";
         for (var i = 0; i < inputs.fasta_path.length; i ++) {
           fai_list += " cat " + inputs.fasta_path[i].path +".fai" + " >> fai.list && "
         }
         return fai_list.slice(0,-3)
-        }
-    position: 1
-    shellQuote: false
+     }
 
 baseCommand: []

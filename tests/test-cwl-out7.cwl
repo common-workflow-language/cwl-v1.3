@@ -18,3 +18,5 @@ stdout: cwl.output.json
 outputs:
   - id: foo
     type: File
+  - id: bar
+    type: int

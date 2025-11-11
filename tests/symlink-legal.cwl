@@ -11,18 +11,8 @@ outputs:
     type: File
     outputBinding: {glob: symlink.txt}
 
-requirements:
-  - class: ShellCommandRequirement
-
 arguments:
-  - mkdir
-  - adir
-  - {valueFrom: " && ", shellQuote: false}
-  - echo
-  - "Who's gonna drive you home"
-  - {valueFrom: "> adir/original.txt", shellQuote: false}
-  - {valueFrom: " && ", shellQuote: false}
-  - ln
-  - -s
-  - adir/original.txt
-  - symlink.txt
+  - sh
+  - -c
+  - |
+    mkdir adir && echo "Who's gonna drive you home" > adir/original.txt && ln -s adir/original.txt symlink.txt

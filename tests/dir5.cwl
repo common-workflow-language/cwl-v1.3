@@ -1,7 +1,6 @@
 class: CommandLineTool
 cwlVersion: v1.3.0-dev1
 requirements:
-  - class: ShellCommandRequirement
   - class: InitialWorkDirRequirement
     listing: $(inputs.indir.listing)
 inputs:
@@ -13,7 +12,9 @@ outputs:
     type: File
     outputBinding:
       glob: output.txt
-arguments: ["find", "-L", ".", "!", "-path", "*.txt",
-  {shellQuote: false, valueFrom: "|"},
-  "sort"]
+arguments:
+  - sh
+  - -c
+  - |
+    find -L . ! -path "*.txt" | sort
 stdout: output.txt

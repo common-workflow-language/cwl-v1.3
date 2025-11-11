@@ -1,7 +1,5 @@
 class: CommandLineTool
 cwlVersion: v1.3.0-dev1
-requirements:
-  - class: ShellCommandRequirement
 inputs:
   inf: File
 outputs:
@@ -9,9 +7,9 @@ outputs:
     type: File
     outputBinding:
       glob: output.txt
-arguments: ["cd", "$(inputs.inf.dirname)/xtestdir",
-  {shellQuote: false, valueFrom: "&&"},
-  "find", ".",
-  {shellQuote: false, valueFrom: "|"},
-  "sort"]
+arguments:
+  - sh
+  - -c
+  - |
+    cd $(inputs.inf.dirname)/xtestdir && find . | sort
 stdout: output.txt
