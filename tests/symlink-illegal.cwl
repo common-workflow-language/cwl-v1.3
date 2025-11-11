@@ -11,15 +11,8 @@ outputs:
     type: File
     outputBinding: {glob: symlink.txt}
 
-requirements:
-  - class: ShellCommandRequirement
-
 arguments:
-  - echo
-  - "Who's gonna drive you home"
-  - {valueFrom: "> /tmp/original.txt", shellQuote: false}
-  - {valueFrom: " && ", shellQuote: false}
-  - ln
-  - -s
-  - /tmp/original.txt
-  - symlink.txt
+  - sh
+  - -c
+  - |
+    echo "Who's gonna drive you home" > /tmp/original.txt && ln -s /tmp/original.txt symlink.txt

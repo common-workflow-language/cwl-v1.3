@@ -1,7 +1,5 @@
 class: CommandLineTool
 cwlVersion: v1.3.0-dev1
-requirements:
-  ShellCommandRequirement: {}
 hints:
   DockerRequirement:
     dockerPull: docker.io/debian:stable-slim
@@ -12,9 +10,9 @@ outputs:
     type: File
     outputBinding:
       glob: output.txt
-arguments: ["cd", "$(inputs.indir.path)",
-  {shellQuote: false, valueFrom: "&&"},
-  "find", ".",
-  {shellQuote: false, valueFrom: "|"},
-  "sort"]
+arguments:
+  - sh
+  - -c
+  - |
+    cd $(inputs.indir.path) && find . | sort
 stdout: output.txt

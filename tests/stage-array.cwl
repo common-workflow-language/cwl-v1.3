@@ -4,7 +4,10 @@ class: CommandLineTool
 cwlVersion: v1.3.0-dev1
 id: stage_array
 arguments:
-  - {shellQuote: false, valueFrom: "ls | grep -v lsout"}
+  - sh
+  - -c
+  - |
+    ls | grep -v lsout
 inputs:
   - id: input_file
     type: File
@@ -30,4 +33,3 @@ requirements:
       - entry: $(null)
       - entryname: a
         entry: b
-  - class: ShellCommandRequirement

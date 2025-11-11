@@ -19,6 +19,8 @@ requirements:
     listing:
       - entryname: /tmp2j3y7rpb/input/stuff.txt  # Give it a weird prefix to minimize chance of conflict with a real file
         entry: $(inputs.filelist)
-  ShellCommandRequirement: {}
 arguments:
-  - {shellQuote: false, valueFrom: "head -n10 /tmp2j3y7rpb/input/stuff.txt > /output/head.txt"}
+  - sh
+  - -c
+  - |
+    head -n10 /tmp2j3y7rpb/input/stuff.txt > /output/head.txt
