@@ -51,10 +51,11 @@ $graph:
 
       ## Changelog for v1.3.0-dev1
 
-      * If an output name is present in the "cwl.output.json" file, but has
-        not been declared in the `outputs` section, it must be ignored and
-        not propagated to the next steps. Previous versions of CWL exhibited
-        undefined behaviour for this occurrence.
+      * [Output Binding](#Output_binding): Any output present in the
+        "cwl.output.json" file but not declared in the `outputs` section must
+        be discarded from the output object. Previous versions of CWL did not
+        define if undeclared outputs in "cwl.output.json" should be present
+        in the output object.
 
       See also the [CWL Workflow Description, v1.3.0-dev1 changelog](Workflow.html#Changelog).
       For other changes since CWL v1.0, see the
