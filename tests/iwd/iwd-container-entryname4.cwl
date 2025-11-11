@@ -14,6 +14,8 @@ requirements:
     listing:
       - entryname: ../input/stuff.txt  # Illegal
         entry: $(inputs.filelist)
-  ShellCommandRequirement: {}
 arguments:
-  - {shellQuote: false, valueFrom: "head -n10 ../input/stuff.txt > head.txt"}
+  - sh
+  - -c
+  - |
+    head -n10 ../input/stuff.txt > head.txt

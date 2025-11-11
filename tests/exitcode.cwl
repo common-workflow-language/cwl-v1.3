@@ -1,7 +1,5 @@
 cwlVersion: v1.3.0-dev1
 class: CommandLineTool
-requirements:
-  ShellCommandRequirement: {}
 inputs: []
 outputs:
   code:
@@ -9,4 +7,8 @@ outputs:
     outputBinding:
       outputEval: $(runtime.exitCode)
 successCodes: [7]
-arguments: ["exit", "7"]
+arguments:
+  - sh
+  - -c
+  - |
+    exit 7

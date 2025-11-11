@@ -1,7 +1,5 @@
 class: CommandLineTool
 cwlVersion: v1.3.0-dev1
-requirements:
-  - class: ShellCommandRequirement
 hints:
   DockerRequirement:
     dockerPull: docker.io/debian:stable-slim

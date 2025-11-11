@@ -2,10 +2,8 @@ class: CommandLineTool
 cwlVersion: v1.3.0-dev1
 inputs: []
 outputs: []
-requirements:
-  ShellCommandRequirement: {}
-arguments: [
-  echo, {valueFrom: '"HOME=$HOME"', shellQuote: false}, {valueFrom: '"TMPDIR=$TMPDIR"', shellQuote: false},
-  {valueFrom: '&&', shellQuote: false},
-  test, {valueFrom: '"$HOME"', shellQuote: false}, "=", $(runtime.outdir),
-  "-a", {valueFrom: '"$TMPDIR"', shellQuote: false}, "=", $(runtime.tmpdir)]
+arguments:
+  - sh
+  - -c
+  - |
+    echo "HOME=$HOME" "TMPDIR=$TMPDIR" && test "$HOME"=$(runtime.outdir) -a "$TMPDIR"=$(runtime.tmpdir)
