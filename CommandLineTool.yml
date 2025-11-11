@@ -57,6 +57,11 @@ $graph:
         define if undeclared outputs in "cwl.output.json" should be present
         in the output object.
 
+      ### Updated Conformance Tests for v1.3.0
+
+      * Reduced the usage of `ShellCommandRequirement` in the conformance tests,
+        making several more of the `required`.
+
       See also the [CWL Workflow Description, v1.3.0-dev1 changelog](Workflow.html#Changelog).
       For other changes since CWL v1.0, see the
       [CWL Command Line Tool Description, v1.1 changelog](https://www.commonwl.org/v1.1/CommandLineTool.html#Changelog)

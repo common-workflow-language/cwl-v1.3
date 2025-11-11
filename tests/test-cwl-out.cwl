@@ -1,7 +1,5 @@
 class: CommandLineTool
 cwlVersion: v1.3.0-dev1
-requirements:
-  - class: ShellCommandRequirement
 hints:
   DockerRequirement:
     dockerPull: docker.io/debian:stable-slim
@@ -13,6 +11,7 @@ outputs:
     type: File
 
 arguments:
-   - valueFrom: >
-       echo foo > foo && echo '{"foo": {"path": "$(runtime.outdir)/foo", "class": "File"} }' > cwl.output.json
-     shellQuote: false
+   - sh
+   - -c
+   - |
+     echo foo > foo && echo '{"foo": {"path": "$(runtime.outdir)/foo", "class": "File"} }' > cwl.output.json
