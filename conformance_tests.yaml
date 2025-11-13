@@ -3618,4 +3618,18 @@
       an_array_of_trues: [ true, true, true ]
       an_int: 42
 
+- job: tests/out_array_records.json
+  tool: tests/out_array_records.cwl
+  id: out_array_records
+  output:
+    result:
+    - f_a: az
+      f_b: bz
+    - f_a: cz
+      f_b: dz
+    - f_a: ez
+      f_b: fz
+  doc: The input and output of the step when they are arrays of records
+  tags: [ command_line_tool, inline_javascript, schema_def, initial_work_dir ]
+
 - $import: tests/loop/test-index.yaml
