@@ -910,7 +910,7 @@
   tags: [ step_input, inline_javascript, workflow ]
 
 - job: tests/step-valuefrom-job.json
-  output: {val: "a_1.b_2\n"}
+  output: {val: "a_1.b_2 a1_hello.b1_HELLO.TAR a2_2.b2_hello.tar.gz\n"}
   tool: tests/step-valuefrom6-wf.cwl
   id: valuefrom_wf_step_concat
   doc: Test valueFrom on workflow step by concatenating different inputs.
