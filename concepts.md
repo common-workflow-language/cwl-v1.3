@@ -68,7 +68,7 @@ and tool expressions **should not** rely on it nor try to parse it.
 An **object** is a data structure equivalent to the "object" type in JSON,
 consisting of an unordered set of name/value pairs (referred to here as
 **fields**) and where the name is a string and the value is a string, number,
-boolean, array, or object.
+boolean, array, object, or null.
 
 A **document** is a file containing a serialized object, or an array of objects.
 
