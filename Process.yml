@@ -72,6 +72,17 @@ $graph:
       doc: "The unique identifier for this object."
 
 
+- name: IdentifierRequired
+  type: record
+  extends: [Identified]
+  abstract: true
+  fields:
+    - name: id
+      type: string
+      jsonldPredicate: "@id"
+      doc: "The unique identifier for this object."
+
+
 - name: LoadListingEnum
   type: enum
   symbols: [no_listing, shallow_listing, deep_listing]
@@ -233,10 +244,15 @@ $graph:
 
 - name: Parameter
   type: record
-  extends: [FieldBase, sld:Documented, Identified]
+  extends: [FieldBase, sld:Documented, IdentifierRequired]
   abstract: true
   doc: |
     Define an input or output parameter to a process.
+  fields:
+    - name: id
+      type: string
+      jsonldPredicate: "@id"
+      doc: "The unique identifier for this Parameter."
 
 
 - type: enum

@@ -280,7 +280,7 @@ $graph:
 
 - type: record
   name: WorkflowStepInput
-  extends: [Identified, InputSink, LoadContents, Labeled]
+  extends: [IdentifierRequired, Sink, LoadContents, Labeled]
   docParent: "#AbstractWorkflowStep"
   doc: |
     The input of a workflow step connects an upstream parameter (from the
@@ -393,6 +393,10 @@ $graph:
        should be filtered out.
 
   fields:
+    - name: id
+      type: string
+      jsonldPredicate: "@id"
+      doc: "The unique identifier of the source input field name."
     - name: default
       type: CWLObjectType?
       doc: |
@@ -509,7 +513,7 @@ $graph:
 
 - name: AbstractWorkflowStep
   type: record
-  extends: [Identified, Labeled, sld:Documented]
+  extends: [IdentifierRequired, Labeled, sld:Documented]
   abstract: true
   docParent: "#Workflow"
   doc: |
@@ -546,6 +550,10 @@ $graph:
     a subworkflow (recursive workflows are not allowed).
 
   fields:
+    - name: id
+      type: string
+      jsonldPredicate: "@id"
+      doc: "The unique identifier for this WorkflowStep."
     - name: in
       type: WorkflowStepInput[]
       jsonldPredicate:
