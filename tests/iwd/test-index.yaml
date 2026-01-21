@@ -392,3 +392,324 @@
     ]
   doc: "Test creation of literal files in the listing"
   tags: [ initial_work_dir, command_line_tool ]
+
+- job: ../loadContents/input.yml
+  id: iwd-container-entryname1_noreq
+  tool: iwd-container-entryname1_noiwdr.cwl
+  output:
+    "head": {
+        "location": "head.txt",
+        "basename": "head.txt",
+        "class": "File",
+        "checksum": "sha1$8b5071fa49953fcdb8729b16345b7c894b493f83",
+        "size": 241
+    }
+  doc: "Test input mount locations when container required"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: ../loadContents/input.yml
+  id: iwd-container-entryname2_noreq
+  tool: iwd-container-entryname2_noiwdr.cwl
+  should_fail: true
+  doc: "Test initialWorkDir input mount locations when no container (should fail)"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: ../loadContents/input.yml
+  id: iwd-container-entryname3_noreq
+  tool: iwd-container-entryname3_noiwdr.cwl
+  should_fail: true
+  doc: "Test initialWorkDir input mount locations when container is a hint (should fail)"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: ../loadContents/input.yml
+  id: iwd-container-entryname4_noreq
+  tool: iwd-container-entryname4_noiwdr.cwl
+  should_fail: true
+  doc: "Must fail if initialWorkDir.entryname starts with ../"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: null
+  id: iwd-fileobjs1_noreq
+  tool: iwd-fileobjs1_noiwdr.cwl
+  output:
+    "filelist": {
+        "location": "inp-filelist.txt",
+        "basename": "inp-filelist.txt",
+        "class": "File",
+        "checksum": "sha1$57f77b36009332d236b52b4beca77301b503b27c",
+        "size": 268866,
+    }
+    "testdir": {
+        "location": "testdir",
+        "basename": "testdir",
+        "class": "Directory",
+        "listing": [
+            {
+                "class": "File",
+                "location": "b",
+                "basename": "b",
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "size": 0,
+            },
+            {
+                "class": "Directory",
+                "location": "c",
+                "basename": "c",
+                "listing": [
+                    {
+                        "class": "File",
+                        "location": "d",
+                        "basename": "d",
+                        "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                        "size": 0,
+                    }
+                ],
+            },
+            {
+                "class": "File",
+                "location": "a",
+                "basename": "a",
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "size": 0,
+            }
+        ],
+    }
+  doc: "Test File and Directory object in initialWorkDir"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: null
+  id: iwd-fileobjs2_noreq
+  tool: iwd-fileobjs2_noiwdr.cwl
+  output:
+    "filelist": {
+        "location": "inp-filelist.txt",
+        "basename": "inp-filelist.txt",
+        "class": "File",
+        "checksum": "sha1$57f77b36009332d236b52b4beca77301b503b27c",
+        "size": 268866,
+    }
+    "testdir": {
+        "location": "testdir",
+        "basename": "testdir",
+        "class": "Directory",
+        "listing": [
+            {
+                "class": "File",
+                "location": "b",
+                "basename": "b",
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "size": 0,
+            },
+            {
+                "class": "Directory",
+                "location": "c",
+                "basename": "c",
+                "listing": [
+                    {
+                        "class": "File",
+                        "location": "d",
+                        "basename": "d",
+                        "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                        "size": 0,
+                    }
+                ],
+            },
+            {
+                "class": "File",
+                "location": "a",
+                "basename": "a",
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "size": 0,
+            }
+        ],
+    }
+  doc: "Test File and Directory object in initialWorkDir"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: null
+  id: iwd-jsondump1_noreq
+  tool: iwd-jsondump1_noiwdr.cwl
+  output:
+    "filelist": {
+        "location": "out-filelist.json",
+        "basename": "out-filelist.json",
+        "class": "File",
+        "checksum": "sha1$5bbeb2a75327927cb97d7e9716c8299682001b36",
+        "size": 298863
+    }
+  doc: "Test dump object to JSON in initialWorkDir file contents, no trailing newline"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: null
+  id: iwd-jsondump1-nl_noreq
+  tool: iwd-jsondump1-nl_noiwdr.cwl
+  output:
+    "filelist": {
+        "location": "out-filelist.json",
+        "basename": "out-filelist.json",
+        "class": "File",
+        "checksum": "sha1$7307f027449371b3642c1f7c32124218af0e41b5",
+        "size": 298864
+    }
+  doc: "Test dump object to JSON in initialWorkDir file contents, with trailing newline"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: null
+  id: iwd-jsondump2-noreq
+  tool: iwd-jsondump2_noiwdr.cwl
+  output:
+    "filelist": {
+        "location": "out-filelist.json",
+        "basename": "out-filelist.json",
+        "class": "File",
+        "checksum": "sha1$a0e2225d47c9ed2f07e7633d00dd19d1cbf65c9f",
+        "size": 298877,
+    }
+  doc: "Test array to JSON in initialWorkDir file contents, no trailing newline"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: null
+  id: iwd-jsondump2-nl-noreq
+  tool: iwd-jsondump2-nl_noiwdr.cwl
+  output:
+    "filelist": {
+        "location": "out-filelist.json",
+        "basename": "out-filelist.json",
+        "class": "File",
+        "checksum": "sha1$750c95cb45561cd1d863506f82a1a75fffd53a54",
+        "size": 298878,
+    }
+  doc: "Test array to JSON in initialWorkDir file contents, with trailing newline"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: null
+  id: iwd-jsondump3-noreq
+  tool: iwd-jsondump3_noiwdr.cwl
+  output:
+    "filelist": {
+        "location": "out-number.json",
+        "basename": "out-number.json",
+        "class": "File",
+        "checksum": "sha1$356b190d3274c960b34c2c9538023dda438d67d4",
+        "size": 4,
+    }
+  doc: "Test number to JSON in initialWorkDir file contents, no trailing newline"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: null
+  id: iwd-jsondump3-nl-noreq
+  tool: iwd-jsondump3-nl_noiwdr.cwl
+  output:
+    "filelist": {
+        "location": "out-number.json",
+        "basename": "out-number.json",
+        "class": "File",
+        "checksum": "sha1$0b02e6b07d199025bfdcfc6b9830d550a0a6bde9",
+        "size": 5,
+    }
+  doc: "Test number to JSON in initialWorkDir file contents, with trailing newline"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: null
+  id: iwd-nolimit-noreq
+  tool: iwd-nolimit_noiwdr.cwl
+  output:
+   "filelist": {
+        "location": "out-filelist.txt",
+        "basename": "out-filelist.txt",
+        "class": "File",
+        "checksum": "sha1$57f77b36009332d236b52b4beca77301b503b27c",
+        "size": 268866,
+    }
+  doc: "Test that initialWorkDir contents can be bigger than 64k"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: ../loadContents/input.yml
+  id: iwd-passthrough1-noreq
+  tool: iwd-passthrough1_noreq.cwl
+  output:
+    "filelist": {
+        "location": "renamed-filelist.txt",
+        "basename": "renamed-filelist.txt",
+        "class": "File",
+        "checksum": "sha1$57f77b36009332d236b52b4beca77301b503b27c",
+        "size": 268866,
+    }
+  doc: "Test initialWorkDir file passthrough"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: ../loadContents/input.yml
+  id: iwd-passthrough2-noreq
+  tool: iwd-passthrough2_noiwdr.cwl
+  output:
+    "out": {
+        "location": "out.txt",
+        "basename": "out.txt",
+        "class": "File",
+        "checksum": "sha1$406e83b1cd694780f1b3ea4fe8fbb754511fe3f7",
+        "size": 49,
+    }
+  doc: "Test initialWorkDir file object is serialized to json"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: ../loadContents/input.yml
+  id: iwd-passthrough3-noreq
+  tool: iwd-passthrough3_noreq.cwl
+  output:
+    "filelist": {
+        "location": "renamed-filelist.txt",
+        "basename": "renamed-filelist.txt",
+        "class": "File",
+        "checksum": "sha1$57f77b36009332d236b52b4beca77301b503b27c",
+        "size": 268866,
+    }
+  doc: "Test initialWorkDir file object is passed through"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: ../loadContents/input.yml
+  id: iwd-passthrough4-noreq
+  tool: iwd-passthrough4_noreq.cwl
+  output:
+    "filelist": {
+        "location": "inp-filelist.txt",
+        "basename": "inp-filelist.txt",
+        "class": "File",
+        "checksum": "sha1$57f77b36009332d236b52b4beca77301b503b27c",
+        "size": 268866,
+    }
+  doc: "Test initialWorkDir file object is passed through"
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: iwd-subdir-job.yml
+  id: iwd-subdir-noreq
+  tool: iwd-subdir-wf_noreq.cwl
+  doc: "Test emitting a subdirectory from initialWorkDir"
+  output:
+    "out": {
+        "location": "c",
+        "basename": "c",
+        "class": "Directory",
+        "listing": [
+            {
+                "location": "d",
+                "basename": "d",
+                "class": "File",
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "size": 0
+            }
+        ]
+    }
+  tags: [ initial_work_dir, command_line_tool, workflow ]
+
+- job: ../loadContents/input.yml
+  id: iwd_dir_literal_real_file
+  tool: iwd_dir_literal_real_file.cwl
+  doc: "Test initialWorkDir directory literal containing a real file"
+  output:
+    same:
+      "location": "inp-filelist.txt"
+      "basename": "inp-filelist.txt"
+      "class": "File"
+      "checksum": "sha1$57f77b36009332d236b52b4beca77301b503b27c"
+      "size": 268866
+  tags: [ initial_work_dir, command_line_tool ]

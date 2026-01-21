@@ -1,7 +1,7 @@
 # Run with cwltest --test test-index.yaml --tool toil-cwl-runner -- --enable-dev
 
 - id: continuation
-  doc: Line continuations in bash scripts should behave correctly
+  doc: Line continuations in bash scripts should behave correctly (using InitialWorkDirRequirement)
   tool: bash-line-continuation.cwl
   output:
     out: {
@@ -10,10 +10,10 @@
         "location": "out.txt",
         "size": 48
     }
-  tags: [ inline_javascript, command_line_tool ]
+  tags: [ inline_javascript, command_line_tool, initial_work_dir ]
 
 - id: continuation_expression
-  doc: Line continuations in bash scripts should always behave correctly
+  doc: Line continuations in bash scripts should always behave correctly (using InitialWorkDirRequirement)
   tool: bash-line-continuation-with-expression.cwl
   output:
     out: {
@@ -22,10 +22,10 @@
         "location": "out.txt",
         "size": 48
     }
-  tags: [ inline_javascript, command_line_tool ]
+  tags: [ inline_javascript, command_line_tool, initial_work_dir ]
 
 - id: quoting_multiple_backslashes
-  doc: Test quoting multiple backslashes
+  doc: Test quoting multiple backslashes using InitialWorkDirRequirement
   tool: bash-dollar-quote.cwl
   output:
     out: {
@@ -34,7 +34,7 @@
         "location": "out.txt",
         "size": 246
     }
-  tags: [ inline_javascript, command_line_tool ]
+  tags: [ inline_javascript, command_line_tool, initial_work_dir ]
 
 - id: escaping_expression_no_extra_quotes
   doc: Strings returned from JS expressions should not have extra quotes around them
@@ -46,4 +46,52 @@
         "location": "file.txt",
         "size": 14
     }
-  tags: [ inline_javascript, command_line_tool ]
+  tags: [ inline_javascript, command_line_tool, initial_work_dir ]
+
+- id: continuation_noiwdr
+  doc: Line continuations in bash scripts should behave correctly (using initialWorkDir)
+  tool: bash-line-continuation_noreq.cwl
+  output:
+    out: {
+        "checksum": "sha1$47d8510dce768c907f4dea6bcaf90f8d59cb265c",
+        "class": "File",
+        "location": "out.txt",
+        "size": 48
+    }
+  tags: [ inline_javascript, command_line_tool, initial_work_dir ]
+
+- id: continuation_expression_noiwdr
+  doc: Line continuations in bash scripts should always behave correctly (using initialWorkDir)
+  tool: bash-line-continuation-with-expression_noreq.cwl
+  output:
+    out: {
+        "checksum": "sha1$47d8510dce768c907f4dea6bcaf90f8d59cb265c",
+        "class": "File",
+        "location": "out.txt",
+        "size": 48
+    }
+  tags: [ inline_javascript, command_line_tool, initial_work_dir ]
+
+- id: quoting_multiple_backslashes_noiwdr
+  doc: Test quoting multiple backslashes using initialWorkDir
+  tool: bash-dollar-quote_noiwdr.cwl
+  output:
+    out: {
+        "checksum": "sha1$acfdc38aef5354c03b976cbb6d9f7d08a179951d",
+        "class": "File",
+        "location": "out.txt",
+        "size": 246
+    }
+  tags: [ inline_javascript, command_line_tool, initial_work_dir ]
+
+- id: escaping_expression_no_extra_quotes_noiwdr
+  doc: Strings returned from JS expressions should not have extra quotes around them (using initialWorkDir)
+  tool: js-quote_noiwdr.cwl
+  output:
+    out: {
+        "checksum": "sha1$726e9e616f278d9028b4a870653b01c125c2fc89",
+        "class": "File",
+        "location": "file.txt",
+        "size": 14
+    }
+  tags: [ inline_javascript, command_line_tool, initial_work_dir ]

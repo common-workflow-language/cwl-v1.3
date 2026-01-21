@@ -431,7 +431,7 @@
       size: 15
   tool: tests/env-wf1.cwl
   id: requirement_priority
-  doc: Test requirement priority
+  doc: Test requirement priority using nested EnvVarRequirements
   tags: [ env_var, workflow ]
 
 - job: tests/env-job.json
@@ -614,7 +614,7 @@
         size: 16
   tool: tests/iwdr-entry.cwl
   id: initial_workdir_trailingnl
-  doc: Test if trailing newline is present in file entry in InitialWorkDir
+  doc: Test if trailing newline is present in file entry in InitialWorkDirRequirement
   tags: [ initial_work_dir, command_line_tool ]
 
 - job: tests/wc-job.json
@@ -1174,7 +1174,7 @@
   }
   tool: tests/dir5.cwl
   id: dynamic_initial_workdir
-  doc: Test dynamic initial work dir
+  doc: Test dynamic InitialWorkDirRequirement
   tags: [ shell_command, initial_work_dir, command_line_tool ]
 
 - job: tests/stagefile-job.yml
@@ -1188,7 +1188,7 @@
   }
   tool: tests/stagefile.cwl
   id: writable_stagedfiles
-  doc: Test writable staged files.
+  doc: Test writable staged files using InitialWorkDirRequirement.
   tags: [ initial_work_dir, command_line_tool ]
 
 - job: tests/file-literal.yml
@@ -1212,7 +1212,7 @@
         size: 0
   tool: tests/linkfile.cwl
   id: initial_workdir_expr
-  doc: Test expression in InitialWorkDir listing
+  doc: Test expression in InitialWorkDirRequirement listing
   tags: [ initial_work_dir, command_line_tool ]
 
 - job: tests/wc-job.json
@@ -1476,7 +1476,7 @@
       }
   tool: tests/recursive-input-directory.cwl
   id: input_dir_recurs_copy_writable
-  doc: Test if a writable input directory is recursively copied and writable
+  doc: Test if a writable IWDR input directory is recursively copied and writable
   tags: [ initial_work_dir, shell_command, command_line_tool ]
 
 - output:
@@ -1530,7 +1530,7 @@
   output: {}
   tool: tests/initialwork-path.cwl
   id: initialworkpath_output
-  doc: Test that file path in $(inputs) for initialworkdir is in $(outdir).
+  doc: Test that file path in $(inputs) for initialWorkDirRequirement is in $(outdir).
   tags: [ initial_work_dir, command_line_tool ]
 
 - job: tests/count-lines6-job.json
@@ -2751,7 +2751,7 @@
 - job: tests/empty.json
   output: {}
   tool: tests/networkaccess.cwl
-  doc: Test networkaccess enabled
+  doc: Test networkaccess enabled using the NetworkAccess requirement
   id: networkaccess
   tags: [ command_line_tool, networkaccess ]
 
@@ -2808,7 +2808,7 @@
   tool: tests/env-tool3.cwl
   id: cwl_requirements_addition
   doc: Test requirements in input document via EnvVarRequirement
-  tags: [ command_line_tool, input_object_requirements ]
+  tags: [ command_line_tool, input_object_requirements, env_var ]
 
 - job: tests/env-job3.yaml
   output:
@@ -2820,7 +2820,7 @@
   tool: tests/env-tool4.cwl
   id: cwl_requirements_override_expression
   doc: Test conflicting requirements in input document via EnvVarRequirement and expression
-  tags: [ command_line_tool, input_object_requirements ]
+  tags: [ command_line_tool, input_object_requirements, env_var ]
 
 - job: tests/env-job4.yaml
   output:
@@ -2832,7 +2832,7 @@
   id: cwl_requirements_override_static
   tool: tests/env-tool3.cwl
   doc: Test conflicting requirements in input document via EnvVarRequirement
-  tags: [ command_line_tool, input_object_requirements ]
+  tags: [ command_line_tool, input_object_requirements, env_var ]
 
 - job: tests/initialworkdirrequirement-docker-out-job.json
   output:
@@ -2849,7 +2849,7 @@
       "size": 12010
   tool: tests/initialworkdir-glob-fullpath.cwl
   id: initial_workdir_output_glob
-  doc: Test full path glob output of InitialWorkDir
+  doc: Test full path glob output of InitialWorkDirRequirement
   tags: [ initial_work_dir, command_line_tool ]
 
 - job: tests/empty.json
@@ -2886,8 +2886,8 @@
 
 - job: tests/empty.json
   tool: tests/inp_update_wf.cwl
-  doc: inplace update has side effect on file content
-  tags: [ inplace_update, workflow ]
+  doc: inplace update has side effect on file content (using InitialWorkDirRequirement)
+  tags: [ inplace_update, workflow, initial_work_dir ]
   output:
     a: 4
     b: 4
@@ -2895,8 +2895,8 @@
 
 - job: tests/empty.json
   tool: tests/inpdir_update_wf.cwl
-  doc: inplace update has side effect on directory content
-  tags: [ inplace_update, workflow ]
+  doc: inplace update has side effect on directory content (using InitialWorkDirRequirement)
+  tags: [ inplace_update, workflow, initial_work_dir ]
   output: {
     a: [
             {
@@ -2932,7 +2932,7 @@
           listing: []
   tags: [ required, command_line_tool ]
 
-- doc: Test that array of input files can be staged to directory with entryname
+- doc: Test that array of input files can be staged to directory with InitialWorkDirRequirement entryname
   id: stage_file_array
   tool: tests/stage_file_array.cwl
   job: tests/stage_file_array.job.json
@@ -3000,7 +3000,7 @@
       ]
   tags: [ command_line_tool, initial_work_dir, inline_javascript ]
 
-- doc: Test that if array of input files are staged to directory with basename and entryname, entryname overrides
+- doc: Test that if array of input files are staged using InitialWorkDirRequirement to directory with basename and entryname, entryname overrides
   id: stage_file_array_entryname_overrides
   tool: tests/stage_file_array_basename_and_entryname.cwl
   job: tests/stage_file_array.job.json
@@ -3633,3 +3633,477 @@
   tags: [ command_line_tool, inline_javascript, schema_def, initial_work_dir ]
 
 - $import: tests/loop/test-index.yaml
+
+- job: tests/empty.json
+  output: {}
+  tool: tests/networkaccess_noreq.cwl
+  doc: Test networkAcccess enabled using the networkAccess field
+  id: networkaccess_noreq
+  tags: [ command_line_tool, networkaccess ]
+
+- job: tests/env-job.json
+  output:
+    out:
+      class: File
+      checksum: sha1$b3ec4ed1749c207e52b3a6d08c59f31d83bff519
+      location: out
+      size: 15
+  tool: tests/env-tool1_noreq.cwl
+  id: envvar_noreq
+  doc: Test CommandLineTool.envDef
+  tags: [ env_var, command_line_tool ]
+
+- job: tests/env-job.json
+  output:
+    out:
+      class: File
+      checksum: sha1$b3ec4ed1749c207e52b3a6d08c59f31d83bff519
+      location: out
+      size: 15
+  tool: tests/env-wf1_noreq.cwl
+  id: requirement_priority_noreq
+  doc: |
+    Test requirement priority: EnvVarRequirement + CommandLineTool.envDef
+  tags: [ env_var, workflow ]
+
+- job: tests/env-job3.yaml
+  output:
+    out:
+      class: File
+      checksum: sha1$b3ec4ed1749c207e52b3a6d08c59f31d83bff519
+      location: out
+      size: 15
+  tool: tests/env-tool4_noreq.cwl
+  id: cwl_envdef_override_expression
+  doc: Test conflicting requirements in input document via envDef and expression
+  tags: [ command_line_tool, input_object_requirements, env_var ]
+
+- job: tests/dir-job.yml
+  output: {
+    "outlist": {
+        "checksum": "sha1$13cda8661796ae241da3a18668fb552161a72592",
+        "size": 20,
+        "location": "output.txt",
+        "class": "File"
+    }
+  }
+  tool: tests/dir5_noiwdr.cwl
+  id: dynamic_initial_workdir_noreq
+  doc: Test dynamic initialWorkDir
+  tags: [ shell_command, initial_work_dir, command_line_tool ]
+
+- job: tests/initialworkdirrequirement-docker-out-job.json
+  output:
+    OUTPUT:
+      "checksum": "sha1$aeb3d11bdf536511649129f4077d5cda6a324118"
+      "location": "ref.fasta"
+      "secondaryFiles": [{
+        "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "location": "ref.fasta.fai",
+          "class": "File",
+          "size": 0
+      }]
+      "class": "File"
+      "size": 12010
+  tool: tests/initialworkdir-glob-fullpath_noiwdr.cwl
+  id: initial_workdir_output_glob_noreq
+  doc: Test full path glob output of initialWorkDir
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: tests/wc-job.json
+  output: {}
+  tool: tests/initialwork-path_noiwdr.cwl
+  id: initialworkpath_output_noreq
+  doc: Test that file path in $(inputs) for initialWorkDir is in $(outdir).
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: tests/string-job.json
+  output:
+    out:
+        class: File
+        checksum: sha1$6a47aa22b2a9d13a66a24b3ee5eaed95ce4753cf
+        location: example.conf
+        size: 16
+  tool: tests/iwdr-entry_noreq.cwl
+  id: initial_workdir_trailingnl_noreq
+  doc: Test if trailing newline is present in file entry in initialWorkDir
+  tags: [ initial_work_dir, command_line_tool ]
+
+- doc: Test initialWorkDir with a nested directory structure from another step
+  job: tests/empty.json
+  output:
+    ya_empty:
+      class: File
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      location: ya
+      size: 0
+  tool: tests/iwdr_with_nested_dirs_noreq.cwl
+  id: initialworkdir_nesteddir_noreq
+  tags: [ initial_work_dir, workflow ]
+
+- job: tests/arguments-job.yml
+  output:
+    classfile:
+        checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+        location: Hello.class
+        class: File
+        size: 0
+  tool: tests/linkfile_noreq.cwl
+  id: initial_workdir_expr_noreq
+  doc: Test expression in initialWorkDir
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: tests/recursive-input-directory.yml
+  output:
+    output_dir: {
+        "basename": "work_dir",
+        "class": "Directory",
+        "listing": [
+            {
+                "basename": "a",
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "class": "File",
+                "location": "work_dir/a",
+                "size": 0
+            },
+            {
+                "basename": "b",
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "class": "File",
+                "location": "work_dir/b",
+                "size": 0
+            },
+            {
+                "basename": "c",
+                "class": "Directory",
+                "listing": [
+                    {
+                        "basename": "d",
+                        "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                        "class": "File",
+                        "location": "work_dir/c/d",
+                        "size": 0
+                    }
+                ],
+                "location": "work_dir/c",
+            },
+            {
+                "basename": "e",
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "class": "File",
+                "location": "work_dir/e",
+                "size": 0
+            },
+        ],
+        "location": "work_dir",
+      }
+    test_result: {
+        "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "class": "File",
+        "location": "output.txt",
+        "size": 0
+      }
+  tool: tests/recursive-input-directory_noiwdr.cwl
+  id: input_dir_recurs_copy_writable_noiwdr
+  doc: Test if a writable initialWorkDir input directory is recursively copied and writable
+  tags: [ initial_work_dir, shell_command, command_line_tool ]
+
+- job: tests/rename-job.json
+  output:
+    outfile:
+      class: File
+      checksum: sha1$327fc7aedf4f6b69a42a7c8b808dc5a7aff61376
+      location: fish.txt
+      size: 1111
+  tool: tests/rename_noreq.cwl
+  id: rename_noreq
+  doc: >-
+    Test initialWorkDir with expression in filename.
+  tags: [ initial_work_dir, command_line_tool ]
+
+- job: tests/search-job.json
+  output:
+    outfile:
+      class: File
+      checksum: sha1$e2dc9daaef945ac15f01c238ed2f1660f60909a0
+      location: result.txt
+      size: 142
+    indexedfile: {
+        "location": "input.txt",
+        "class": "File",
+        "checksum": "sha1$327fc7aedf4f6b69a42a7c8b808dc5a7aff61376",
+        "secondaryFiles": [
+            {
+                "location": "input.txt.idx1",
+                "class": "File",
+                "checksum": "sha1$1f6fe811644355974cdd06d9eb695d6e859f3b44",
+                "size": 1500
+            },
+            {
+                "location": "input.idx2",
+                "class": "File",
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "size": 0
+            },
+            {
+                "location": "input.txt.idx3",
+                "class": "File",
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "size": 0
+            },
+            {
+                "location": "input.txt.idx4",
+                "class": "File",
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "size": 0
+            },
+            {
+                "location": "input.txt.idx5",
+                "class": "File",
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "size": 0
+            },
+            {
+                "location": "input.idx6.txt",
+                "class": "File",
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "size": 0
+            },
+            {
+            "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+            "class": "File",
+            "location": "input.txt.idx7",
+            "size": 0
+            },
+            {
+            "checksum": "sha1$47a013e660d408619d894b20806b1d5086aab03b",
+            "class": "File",
+            "location": "hello.txt",
+            "size": 13
+            },
+            {
+            "class": "Directory",
+            "listing": [{
+               "basename": "index",
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "class": "File",
+                "location": "index",
+                "size": 0
+            }],
+            "location": "input.txt_idx8",
+          }
+        ],
+        "size": 1111
+    }
+  tool: "tests/search_noiwdr.cwl#main"
+  id: initial_workdir_secondary_files_expr_noiwdr
+  doc: >-
+    Test initialWorkDir linking input files and capturing secondaryFiles
+    on input and output. Also tests the use of a variety of parameter references
+    and expressions in the secondaryFiles field.
+  tags: [ initial_work_dir, inline_javascript, workflow ]
+
+- job: tests/stage-array-job.json
+  tool: tests/stage-array_noiwdr.cwl
+  doc: Test null and array input in initialWorkDir
+  output:
+      "output": {
+        "basename": "lsout",
+        "checksum": "sha1$e453d26efd859a9abc80ae1a1d9d63db72376053",
+        "class": "File",
+        "location": "lsout",
+        "size": 32
+      }
+  tags: [ resource, command_line_tool, initial_work_dir ]
+  id: initial_work_dir_for_null_and_arrays_noreq
+
+- job: tests/stage-array-dirs-job.yml
+  tool: tests/stage-array-dirs_noreq.cwl
+  doc: Test array of directories initialWorkDir
+  output: {
+    "output": [
+            {
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "class": "File",
+                "location": "a",
+                "size": 0
+            },
+            {
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "class": "File",
+                "location": "B",
+                "size": 0
+            }
+        ]
+    }
+  tags: [ resource, command_line_tool, initial_work_dir ]
+  id: initial_work_dir_for_array_dirs_noreq
+
+- doc: Test that array of input files can be staged to directory with initialWorkDir.entryname
+  id: stage_file_array_noiwdr
+  tool: tests/stage_file_array_noiwdr.cwl
+  job: tests/stage_file_array.job.json
+  output:
+    output:
+      [
+        {
+          "basename": "sfa-1.txt",
+          "checksum": "sha1$4c1cd0638ab3580310823fd1556d27ecb4816df6",
+          "class": "File",
+          "size": 49
+        },
+        {
+          "basename": "sfa-1.txt.sec",
+          "checksum": "sha1$40f4ee1bcd1a9466fcd2e48cf7fc3798025d2f9a",
+          "class": "File",
+          "size": 59
+        },
+        {
+          "basename": "sfa-2.txt",
+          "checksum": "sha1$4c1cd0638ab3580310823fd1556d27ecb4816df6",
+          "class": "File",
+          "size": 49
+        },
+        {
+          "basename": "sfa-2.txt.sec",
+          "checksum": "sha1$40f4ee1bcd1a9466fcd2e48cf7fc3798025d2f9a",
+          "class": "File",
+          "size": 59
+        }
+      ]
+  tags: [ command_line_tool, initial_work_dir, inline_javascript ]
+
+- doc: Test that if array of input files are staged using initialWorkDir to a directory with basename and entryname, entryname overrides
+  id: stage_file_array_entryname_overrides_noiwdr
+  tool: tests/stage_file_array_basename_and_entryname_noiwdr.cwl
+  job: tests/stage_file_array.job.json
+  output:
+    output:
+      [
+        {
+          "basename": "sfa-1.txt",
+          "checksum": "sha1$4c1cd0638ab3580310823fd1556d27ecb4816df6",
+          "class": "File",
+          "size": 49
+        },
+        {
+          "basename": "sfa-1.txt.sec",
+          "checksum": "sha1$40f4ee1bcd1a9466fcd2e48cf7fc3798025d2f9a",
+          "class": "File",
+          "size": 59
+        },
+        {
+          "basename": "sfa-2.txt",
+          "checksum": "sha1$4c1cd0638ab3580310823fd1556d27ecb4816df6",
+          "class": "File",
+          "size": 49
+        },
+        {
+          "basename": "sfa-2.txt.sec",
+          "checksum": "sha1$40f4ee1bcd1a9466fcd2e48cf7fc3798025d2f9a",
+          "class": "File",
+          "size": 59
+        }
+      ]
+  tags: [ command_line_tool, initial_work_dir, inline_javascript ]
+
+- job: tests/stagefile-job.yml
+  output: {
+    "outfile": {
+        "checksum": "sha1$b769c7b2e316edd4b5eb2d24799b2c1f9d8c86e6",
+        "size": 1111,
+        "location": "bob.txt",
+        "class": "File"
+    }
+  }
+  tool: tests/stagefile_noreq.cwl
+  id: writable_stagedfiles_noreq
+  doc: Test writable staged files using initialWorkDir.
+  tags: [ initial_work_dir, command_line_tool ]
+
+- output:
+    "foo": {
+        "checksum": "sha1$63da67422622fbf9251a046d7a34b7ea0fd4fead",
+        "class": "File",
+        "location": "foo.txt",
+        "size": 22
+    }
+  job: tests/cat-job.json
+  tool: tests/template-tool_noiwdr.cwl
+  id: initworkdir_expreng_requirements_noiwdr
+  doc: Test initialWorkDir ExpressionEngineRequirement.engineConfig feature
+  tags: [ initial_work_dir, inline_javascript, command_line_tool ]
+
+- job: tests/empty.json
+  tool: tests/inpdir_update_wf_noiwdr.cwl
+  doc: inplace update has side effect on directory content (using initialWorkDir)
+  tags: [ inplace_update, workflow, initial_work_dir ]
+  output: {
+    a: [
+            {
+                "basename": "blurb",
+                "class": "File",
+                "location": "blurb"
+            }
+        ],
+    b: [
+            {
+                "basename": "blurb",
+                "class": "File",
+                "location": "blurb"
+            }
+        ]
+  }
+  id: modify_directory_content_noiwdr
+
+- job: tests/empty.json
+  tool: tests/inp_update_wf_noiwdr.cwl
+  doc: inplace update has side effect on file content (using initialWorkDir)
+  tags: [ inplace_update, workflow, initial_work_dir ]
+  output:
+    a: 4
+    b: 4
+  id: modify_file_content
+
+- job: tests/empty.json
+  output:
+    out: {
+        "basename": "emptyWritableDir",
+        "listing": [
+            {
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "basename": "blurg",
+                "location": "blurg",
+                "class": "File",
+                "size": 0
+            }
+        ],
+        "location": "emptyWritableDir",
+        "class": "Directory"
+    }
+  tool: tests/writable-dir_noiwdr.cwl
+  id: initial_workdir_empty_writable_noiwdr
+  doc: Test empty writable dir with initialWorkDir
+  tags: [ inline_javascript, initial_work_dir, command_line_tool ]
+
+
+- job: tests/empty.json
+  output:
+    out: {
+        "basename": "emptyWritableDir",
+        "listing": [
+            {
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                "basename": "blurg",
+                "location": "blurg",
+                "class": "File",
+                "size": 0
+            }
+        ],
+        "location": "emptyWritableDir",
+        "class": "Directory"
+    }
+  tool: tests/writable-dir-docker_noiwdr.cwl
+  id: initial_workdir_empty_writable_docker_noiwdr
+  doc: Test empty writable dir with initialWorkDir inside Docker
+  tags: [ inline_javascript, initial_work_dir, command_line_tool ]
