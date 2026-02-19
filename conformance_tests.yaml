@@ -872,6 +872,20 @@
     Test optional output file and optional secondaryFile on output.
   tags: [ docker, command_line_tool ]
 
+- tool: tests/optional-list-output.cwl
+  job: tests/any-type-job.json
+  output:
+    files: null
+    log:
+        location: output.txt
+        size: 6
+        class: "File"
+        checksum: "sha1$f572d396fae9206628714fb2ce00f72e94f2258f"
+  id: output_optional_list
+  doc: >-
+    Test optional list of files.
+  tags: [ command_line_tool ]
+
 - job: tests/empty.json
   output:
     out: "\n"
