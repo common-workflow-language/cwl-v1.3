@@ -10,8 +10,12 @@ outputs:
     type: File
     outputBinding:
       glob: output.txt
-  files:
+  files_opt:
     type: File[]?
+    outputBinding:
+      glob: bumble*.txt
+  files_empty:
+    type: File[]
     outputBinding:
       glob: bumble*.txt
 baseCommand: echo
