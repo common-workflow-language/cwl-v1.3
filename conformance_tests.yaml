@@ -875,7 +875,8 @@
 - tool: tests/optional-list-output.cwl
   job: tests/any-type-job.json
   output:
-    files: null
+    files_opt: null
+    files_empty: []
     log:
         location: output.txt
         size: 6
