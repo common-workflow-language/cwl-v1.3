@@ -412,3 +412,12 @@
         }
     ]
   tags: [ conditional, scatter, multiple_input, workflow ]
+
+- id: cond-with-nested-workflows
+  doc: "Skip an entire nested subworkflow"
+  tool: cond-wf-014.cwl
+  job: cond-job3.yaml
+  output:
+    out1: null
+    out2: null
+  tags: [ conditional, workflow, subworkflow ]
