@@ -392,3 +392,37 @@
     ]
   doc: "Test creation of literal files in the listing"
   tags: [ initial_work_dir, command_line_tool ]
+
+- id: iwdr-listing-dirent
+  tool: iwdr-listing-dirent.cwl
+  output:
+    out: 
+      class: File
+      basename: "output.txt"
+      checksum: "sha1$e9a31377f6fd319eeb1748a08f12f27953563e86"
+      size: 13
+  doc: "Test that a bare listing expression can return a single Dirent"
+  tags: [ command_line_tool ]
+
+- id: iwdr-listing-null
+  tool: iwdr-listing-null.cwl
+  output:
+    out: 
+      class: File
+      basename: "output.txt"
+      checksum: "sha1$4b07772231192edf278aaa558d36b5407a76c67c"
+      size: 8
+  doc: "Test that a null listing expression has no effect"
+  tags: [ command_line_tool ]
+
+- job: ../stagefile-job.yml
+  id: iwdr-listing-single-file
+  tool: iwdr-listing-single-file.cwl
+  output:
+    out: 
+      class: File
+      basename: "output.txt"
+      checksum: "sha1$327fc7aedf4f6b69a42a7c8b808dc5a7aff61376"
+      size: 1111
+  doc: "Test that a bare listing expression can return a single File"
+  tags: [ command_line_tool ]
