@@ -3471,3 +3471,18 @@
   tags: [required, command_line_tool]
   should_fail: true
 - $import: tests/loop/test-index.yaml
+- id: writable_empty_directory_literal
+  tool: tests/empty_directory_literal.cwl
+  job: tests/empty_directory_literal.json
+  doc: >-
+    Confirm that an writable empty directory literal is possible.
+  tags: [command_line_tool, initial_work_dir]
+  output:
+    filled:
+      basename: out
+      class: Directory
+      listing:
+        - class: File
+          basename: written
+          size: 0
+          checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
