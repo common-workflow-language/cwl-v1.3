@@ -1,16 +1,18 @@
 {
-  "$graph": [
-  {
-    "name": "SecondaryFilesDSLExample",
-    "type": "record",
-    "documentRoot": true,
-    "fields": [{
-      "name": "secondaryFiles",
-      "type": "string",
-      "jsonldPredicate": {
-        _type: "@vocab",
-        "secondaryFilesDSL": true
-      }
-    }]
-  }]
+  "$graph":
+    [
+      {
+        "name": "SecondaryFilesDSLExample",
+        "type": "record",
+        "documentRoot": true,
+        "fields":
+          [
+            {
+              "name": "secondaryFiles",
+              "type": "string",
+              "jsonldPredicate": { _type: "@vocab", "secondaryFilesDSL": true },
+            },
+          ],
+      },
+    ],
 }

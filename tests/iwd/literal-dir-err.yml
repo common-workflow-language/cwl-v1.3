@@ -1,8 +1,8 @@
-file_def: 
+file_def:
   class: Directory
   basename: mydir
   listing:
-    - class: File 
+    - class: File
       basename: myfile
       contents: placeholder
     - class: Directory

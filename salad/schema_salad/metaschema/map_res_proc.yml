@@ -1,12 +1,7 @@
 {
-    "mapped": [
-        {
-            "value": "daphne",
-            "key": "fred"
-        },
-        {
-            "value": "scooby",
-            "key": "shaggy"
-        }
-    ]
+  "mapped":
+    [
+      { "value": "daphne", "key": "fred" },
+      { "value": "scooby", "key": "shaggy" },
+    ],
 }

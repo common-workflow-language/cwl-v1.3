@@ -1,9 +1,6 @@
-[{
-  "extype": "string"
-}, {
-  "extype": "string?"
-}, {
-  "extype": "string[]"
-}, {
-  "extype": "string[]?"
-}]
+[
+  { "extype": "string" },
+  { "extype": "string?" },
+  { "extype": "string[]" },
+  { "extype": "string[]?" },
+]
