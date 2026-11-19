@@ -2,5 +2,5 @@ dir1:
   class: Directory
   basename: cwl
   listing:
-   - class: File
-     path: hello.txt
+    - class: File
+      path: hello.txt
